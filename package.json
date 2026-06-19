@@ -1,0 +1,18 @@
+{
+  "name": "workspace",
+  "version": "0.0.0",
+  "license": "MIT",
+  "packageManager": "pnpm@11.7.0",
+  "scripts": {
+    "preinstall": "node -e \"const fs = require('fs'); ['package-lock.json', 'yarn.lock'].forEach(f => fs.existsSync(f) && fs.unlinkSync(f)); if (!/pnpm/.test(process.env.npm_config_user_agent || '')) { console.error('Use pnpm instead'); process.exit(1); }\"",
+    "dev": "npx pnpm --filter \"./artifacts/**\" --parallel run dev",
+    "build": "npx pnpm run typecheck && npx pnpm -r --if-present run build",
+    "typecheck:libs": "tsc --build",
+    "typecheck": "npx pnpm --filter @workspace/db generate && npx pnpm run typecheck:libs && npx pnpm -r --filter \"./artifacts/**\" --if-present run typecheck"
+  },
+  "private": true,
+  "devDependencies": {
+    "typescript": "~5.9.2",
+    "prettier": "^3.8.1"
+  }
+}
