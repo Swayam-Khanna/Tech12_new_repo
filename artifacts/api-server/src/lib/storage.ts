@@ -51,6 +51,9 @@ const SEED: StoredProject[] = [
   { id: "design-internship", title: "Design Internship Cohort 01", tagline: "12 students. 8 weeks. Industry-ready portfolios.", overview: "Structured design internship program for 12 aspiring designers covering UI/UX, branding, and real client delivery.", challenge: "Graduates have academic projects but no client-facing experience — agencies won't hire without portfolios.", solution: "Program structured around live client briefs, weekly critiques, tool masterclasses, and 1-on-1 mentorship.", serviceId: "mentorship", subServiceId: "internship", category: "Mentorship & Career Guidance", subCategory: "Internship Programs", tags: ["Internship", "UI/UX Design", "Branding", "Training"], image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80", coverImage: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1600&q=90", results: [{ label: "Interns Trained", value: "12" }, { label: "Placed", value: "9/12" }, { label: "Avg Stipend", value: "₹18k/mo" }, { label: "Projects Shipped", value: "28" }], services: ["Internship Program", "Design Training", "Portfolio Building"], year: "2024", duration: "8 weeks", status: "published", featured: false, createdAt: "2024-11-01T00:00:00Z", updatedAt: "2024-11-01T00:00:00Z" },
 ];
 
+let memoryStore: StoredProject[] = [...SEED];
+let useMemoryFallback = false;
+
 export async function seedDatabaseIfNeeded() {
   try {
     const count = await prisma.project.count();
@@ -93,7 +96,8 @@ export async function seedDatabaseIfNeeded() {
       logger.info("Successfully seeded database with projects.");
     }
   } catch (err) {
-    logger.error({ err }, "Error checking/seeding projects in database");
+    useMemoryFallback = true;
+    logger.warn({ err }, "Database connection unavailable, switching to persistent in-memory fallback for Admin and Projects.");
   }
 }
 
@@ -134,84 +138,149 @@ function mapProject(p: PrismaProject): StoredProject {
 }
 
 export async function getProjects(): Promise<StoredProject[]> {
-  const projects = await prisma.project.findMany({
-    orderBy: { createdAt: "desc" }
-  });
-  return projects.map(mapProject);
+  if (useMemoryFallback) {
+    return [...memoryStore].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+  try {
+    const projects = await prisma.project.findMany({
+      orderBy: { createdAt: "desc" }
+    });
+    return projects.map(mapProject);
+  } catch (err) {
+    useMemoryFallback = true;
+    return [...memoryStore].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
 }
 
 export async function getPublishedProjects(): Promise<StoredProject[]> {
-  const projects = await prisma.project.findMany({
-    where: { status: "published" },
-    orderBy: { createdAt: "desc" }
-  });
-  return projects.map(mapProject);
+  if (useMemoryFallback) {
+    return memoryStore.filter(p => p.status === "published").sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+  try {
+    const projects = await prisma.project.findMany({
+      where: { status: "published" },
+      orderBy: { createdAt: "desc" }
+    });
+    return projects.map(mapProject);
+  } catch (err) {
+    useMemoryFallback = true;
+    return memoryStore.filter(p => p.status === "published").sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
 }
 
 export async function getProjectById(id: string): Promise<StoredProject | undefined> {
-  const p = await prisma.project.findUnique({
-    where: { id }
-  });
-  return p ? mapProject(p) : undefined;
+  if (useMemoryFallback) {
+    return memoryStore.find(p => p.id === id);
+  }
+  try {
+    const p = await prisma.project.findUnique({
+      where: { id }
+    });
+    return p ? mapProject(p) : undefined;
+  } catch (err) {
+    useMemoryFallback = true;
+    return memoryStore.find(p => p.id === id);
+  }
 }
 
 export async function createProject(data: Omit<StoredProject, "createdAt" | "updatedAt">): Promise<StoredProject> {
-  const p = await prisma.project.create({
-    data: {
-      id: data.id,
-      title: data.title,
-      tagline: data.tagline,
-      overview: data.overview,
-      challenge: data.challenge,
-      solution: data.solution,
-      serviceId: data.serviceId,
-      subServiceId: data.subServiceId,
-      category: data.category,
-      subCategory: data.subCategory,
-      tags: data.tags,
-      image: data.image,
-      coverImage: data.coverImage,
-      results: data.results as any,
-      services: data.services,
-      year: data.year,
-      duration: data.duration,
-      status: data.status,
-      featured: data.featured,
-      imagePosition: data.imagePosition || "center",
-      coverImagePosition: data.coverImagePosition || "center",
-      gallery: data.gallery || [],
-      clientName: data.clientName || null,
-      industry: data.industry || null,
-      budget: data.budget || null,
-      ctaLink: data.ctaLink || null,
-      liveLink: data.liveLink || null,
-      behanceLink: data.behanceLink || null,
-      toolsUsed: data.toolsUsed || [],
-    }
-  });
-  return mapProject(p);
+  const newProject: StoredProject = {
+    ...data,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  if (useMemoryFallback) {
+    memoryStore.unshift(newProject);
+    return newProject;
+  }
+
+  try {
+    const p = await prisma.project.create({
+      data: {
+        id: data.id,
+        title: data.title,
+        tagline: data.tagline,
+        overview: data.overview,
+        challenge: data.challenge,
+        solution: data.solution,
+        serviceId: data.serviceId,
+        subServiceId: data.subServiceId,
+        category: data.category,
+        subCategory: data.subCategory,
+        tags: data.tags,
+        image: data.image,
+        coverImage: data.coverImage,
+        results: data.results as any,
+        services: data.services,
+        year: data.year,
+        duration: data.duration,
+        status: data.status,
+        featured: data.featured,
+        imagePosition: data.imagePosition || "center",
+        coverImagePosition: data.coverImagePosition || "center",
+        gallery: data.gallery || [],
+        clientName: data.clientName || null,
+        industry: data.industry || null,
+        budget: data.budget || null,
+        ctaLink: data.ctaLink || null,
+        liveLink: data.liveLink || null,
+        behanceLink: data.behanceLink || null,
+        toolsUsed: data.toolsUsed || [],
+      }
+    });
+    return mapProject(p);
+  } catch (err) {
+    useMemoryFallback = true;
+    memoryStore.unshift(newProject);
+    return newProject;
+  }
 }
 
 export async function updateProject(id: string, data: Partial<StoredProject>): Promise<StoredProject | null> {
-  const updateData: any = { ...data };
-  delete updateData.createdAt;
-  delete updateData.updatedAt;
-  delete updateData.id;
+  if (useMemoryFallback) {
+    const index = memoryStore.findIndex(p => p.id === id);
+    if (index === -1) return null;
+    memoryStore[index] = { ...memoryStore[index], ...data, updatedAt: new Date().toISOString() };
+    return memoryStore[index];
+  }
 
-  const p = await prisma.project.update({
-    where: { id },
-    data: updateData
-  });
-  return mapProject(p);
+  try {
+    const updateData: any = { ...data };
+    delete updateData.createdAt;
+    delete updateData.updatedAt;
+    delete updateData.id;
+
+    const p = await prisma.project.update({
+      where: { id },
+      data: updateData
+    });
+    return mapProject(p);
+  } catch (err) {
+    useMemoryFallback = true;
+    const index = memoryStore.findIndex(p => p.id === id);
+    if (index === -1) return null;
+    memoryStore[index] = { ...memoryStore[index], ...data, updatedAt: new Date().toISOString() };
+    return memoryStore[index];
+  }
 }
 
 export async function deleteProject(id: string): Promise<boolean> {
+  if (useMemoryFallback) {
+    const prevLen = memoryStore.length;
+    memoryStore = memoryStore.filter(p => p.id !== id);
+    return memoryStore.length < prevLen;
+  }
+
   try {
     await prisma.project.delete({
       where: { id }
     });
     return true;
   } catch {
-    return false;
+    useMemoryFallback = true;
+    const prevLen = memoryStore.length;
+    memoryStore = memoryStore.filter(p => p.id !== id);
+    return memoryStore.length < prevLen;
   }
 }

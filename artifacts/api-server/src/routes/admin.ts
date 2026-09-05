@@ -10,7 +10,7 @@ import {
 
 const router = Router();
 
-const ADMIN_PASSWORD = process.env["ADMIN_PASSWORD"] || "techtitans2024";
+const ADMIN_PASSWORD = process.env["ADMIN_PASSWORD"] || "techtitans2026_prod_pass";
 const SECRET = process.env["ADMIN_SECRET"] || "tt_secret_key_2024";
 
 function generateToken(payload: object): string {

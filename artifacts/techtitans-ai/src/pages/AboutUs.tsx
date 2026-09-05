@@ -8,7 +8,7 @@ const team = [
   {
     name: "Aryan Sharma",
     role: "Founder & Creative Director",
-    bio: "Visionary behind TechTitans AI. Leads brand strategy and creative direction for all client projects.",
+    bio: "Visionary behind ABVT Technology. Leads brand strategy and creative direction for all client projects.",
     initials: "AS",
     color: "from-blue-500 to-cyan-500",
   },
@@ -93,11 +93,11 @@ export default function AboutUs() {
         >
           <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">About Us</p>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-8 leading-tight max-w-4xl">
-            We Are the Titans <br />
+            We Are the Innovators <br />
             <span className="text-gradient">Behind Your Brand.</span>
           </h1>
           <p className="text-foreground-muted text-lg md:text-xl max-w-3xl leading-relaxed">
-            TechTitans AI is a premium digital agency based in Solan, Himachal Pradesh. Founded with one mission —
+            ABVT Technology is a premium digital agency based in Solan, Himachal Pradesh. Founded with one mission —
             to help ambitious brands look world-class and grow faster through intelligent design, cutting-edge
             development, and powerful storytelling.
           </p>
@@ -138,7 +138,7 @@ export default function AboutUs() {
             </h2>
             <div className="space-y-5 text-foreground-muted leading-relaxed">
               <p>
-                TechTitans AI was born out of a simple frustration — too many great businesses were being held back
+                ABVT Technology was born out of a simple frustration — too many great businesses were being held back
                 by poor digital presence. We saw startups with amazing products losing to competitors simply because
                 of weaker branding, slower websites, and no content strategy.
               </p>

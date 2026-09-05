@@ -9,10 +9,10 @@ export function Footer() {
           <div className="flex flex-col items-start">
             <a href="#" className="mb-3 inline-block">
               <div className="w-16 h-16 flex items-center justify-center">
-                <img src="/logo.png" alt="TechTitansAI" className="w-full h-full object-contain" />
+                <img src="/logo.png" alt="ABVT Technology" className="w-full h-full object-contain" />
               </div>
             </a>
-            <h3 className="font-display text-white text-xl font-bold mb-1">TechTitans AI</h3>
+            <h3 className="font-display text-white text-xl font-bold mb-1">ABVT Technology</h3>
             <p className="text-xs text-neutral-500 mb-4 font-sans">Empowering Digital Realities</p>
             <div className="flex items-center gap-2.5">
               <a
@@ -96,9 +96,9 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
-          <p>© 2026 TechTitans AI. All rights reserved.</p>
+          <p>© 2026 ABVT Technology. All rights reserved.</p>
           <div className="flex items-center gap-2">
-            <span>Powered By TechTitans AI</span>
+            <span>Powered By ABVT Technology</span>
             <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
           </div>
         </div>

@@ -2,6 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import type { Request, Response, NextFunction } from "express";
 import { upload } from "../middlewares/upload";
+import { uploadToNeonS3, isS3Configured } from "../lib/neonS3";
 
 const SECRET = process.env["ADMIN_SECRET"] || "tt_secret_key_2024";
 
@@ -24,7 +25,7 @@ function requireAdmin(req: Request, res: Response, next: NextFunction) {
 const router = Router();
 
 router.post("/admin/upload", requireAdmin, (req, res, next) => {
-  upload.single("file")(req, res, (err) => {
+  upload.single("file")(req, res, async (err) => {
     if (err) {
       res.status(400).json({ error: err.message });
       return;
@@ -34,19 +35,28 @@ router.post("/admin/upload", requireAdmin, (req, res, next) => {
       return;
     }
     
-    const file = req.file as any;
-    const url = file.path || file.secure_url;
-    const type = req.file.mimetype.startsWith("image/") ? "image"
-      : req.file.mimetype.startsWith("video/") ? "video"
+    const file = req.file;
+    const type = file.mimetype.startsWith("image/") ? "image"
+      : file.mimetype.startsWith("video/") ? "video"
       : "pdf";
 
-    res.json({
-      url,
-      filename: file.filename || file.public_id || file.originalname,
-      originalName: file.originalname,
-      size: file.size,
-      type,
-    });
+    try {
+      if (isS3Configured) {
+        const url = await uploadToNeonS3(file, "projects");
+        res.json({
+          url,
+          filename: file.originalname,
+          originalName: file.originalname,
+          size: file.size,
+          type,
+        });
+        return;
+      }
+
+      res.status(500).json({ error: "Storage service not configured" });
+    } catch (uploadErr: any) {
+      res.status(500).json({ error: uploadErr.message || "Failed to upload file to storage" });
+    }
   });
 });
 

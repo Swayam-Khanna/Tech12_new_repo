@@ -60,8 +60,8 @@ JWT_SECRET="generate_a_secure_long_secret_key"
 # Express Backend Port (Vite proxies /api requests here)
 PORT=8080
 
-# Admin Portal Password (defaults to techtitans2024 if empty)
-ADMIN_PASSWORD="your_admin_panel_password"
+# Admin Portal Password (defaults to techtitans2026_prod_pass if empty)
+ADMIN_PASSWORD="techtitans2026_prod_pass"
 ```
 
 ---

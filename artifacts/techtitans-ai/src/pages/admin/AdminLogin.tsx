@@ -46,7 +46,7 @@ export default function AdminLogin() {
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-5">
               <Zap className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-2xl font-display font-bold text-white">TechTitans Admin</h1>
+            <h1 className="text-2xl font-display font-bold text-white">ABVT Admin</h1>
             <p className="text-foreground-muted text-sm mt-1">Private access only — authorized personnel</p>
           </div>
 
@@ -94,11 +94,6 @@ export default function AdminLogin() {
               {loading ? "Verifying..." : "Access Dashboard"}
             </button>
           </form>
-
-          <p className="text-center text-xs text-foreground-muted mt-6">
-            Default password: <code className="text-primary/70">techtitans2024</code><br />
-            <span className="opacity-60">Set ADMIN_PASSWORD env var to change it.</span>
-          </p>
         </div>
       </motion.div>
     </div>

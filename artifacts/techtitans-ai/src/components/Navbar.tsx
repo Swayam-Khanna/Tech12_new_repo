@@ -31,17 +31,12 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-1.5 md:gap-2 group relative z-50">
-          <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-            <img
-              src="/logo.png"
-              alt="TechTitans AI"
-              className="w-full h-full object-contain"
-            />
-          </div>
-          <span className="font-display text-white text-xl md:text-2xl font-bold tracking-wide transition-colors duration-300 group-hover:text-primary">
-            TechTitans AI
-          </span>
+        <a href="#" className="flex items-center group relative z-50 transition-transform duration-300 hover:scale-105 active:scale-95">
+          <img
+            src="/abvt-navbar-logo.png"
+            alt="ABVT Technology"
+            className="h-10 md:h-11 w-auto object-contain drop-shadow-[0_2px_12px_rgba(59,130,246,0.25)]"
+          />
         </a>
 
         {/* Desktop Nav */}

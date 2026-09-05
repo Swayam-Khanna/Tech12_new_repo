@@ -249,91 +249,98 @@ export function Hero() {
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="relative lg:h-[600px] flex justify-center items-center"
+          className="relative lg:h-[620px] flex justify-center items-center"
         >
           <motion.div
             style={{ rotateX, rotateY, transformPerspective: 1000 }}
-            animate={{ y: [0, -18, 0], rotate: [0, 1.5, -1.5, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="relative w-full max-w-md aspect-square"
+            animate={{ y: [0, -14, 0], rotate: [0, 0.8, -0.8, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            className="relative w-full max-w-[500px]"
           >
-            {/* Main Glass Card */}
-            <div className="absolute inset-0 glass-card rounded-3xl p-8 flex flex-col justify-between overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            {/* Main Outer Glass Container Box */}
+            <div className="relative rounded-[32px] p-6 sm:p-7 border border-white/10 bg-[#0B1120]/75 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden">
+              {/* Subtle background gradient glow behind rings */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-r from-blue-600/30 to-emerald-500/25 rounded-full blur-[80px] pointer-events-none" />
 
-              <div className="flex justify-between items-start z-10">
-                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center border border-white/10">
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="w-6 h-6 border-2 border-primary border-t-accent rounded-full"
-                  />
-                </div>
-                <div className="px-3 py-1 rounded-full bg-accent/20 text-accent text-xs font-semibold border border-accent/20">
-                  AI Powered
+              {/* Top Left Tag: AI POWERED */}
+              <div className="flex justify-between items-center mb-2 z-10 relative">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-400 text-xs font-semibold tracking-wide">
+                  <span className="text-[13px]">⚡</span> AI POWERED
                 </div>
               </div>
 
-              <div className="relative z-10">
-                <img
-                  src={`${import.meta.env.BASE_URL}images/hero-visual.png`}
-                  alt="3D Abstract AI Visualization"
-                  className="w-full h-full object-contain drop-shadow-2xl mix-blend-lighten"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = "none";
-                  }}
+              {/* Central Tech Office Workplace Graphic */}
+              <div className="relative z-10 my-3 rounded-2xl overflow-hidden border border-white/10 shadow-lg">
+                <motion.img
+                  src="/images/hero-tech-office.jpg"
+                  alt="ABVT Technology Modern Infrastructure & Development Workspace"
+                  className="w-full h-[260px] sm:h-[300px] object-cover object-center transform transition-transform duration-700 hover:scale-105"
+                  animate={{ scale: [1, 1.015, 1] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 />
-                {/* Fallback visual */}
-                <div className="flex flex-col gap-3 py-4">
-                  {[0.9, 0.6, 0.75, 0.45].map((w, i) => (
-                    <motion.div
-                      key={i}
-                      className="h-2 rounded-full bg-gradient-to-r from-primary/60 to-accent/40"
-                      style={{ width: `${w * 100}%` }}
-                      animate={{ opacity: [0.4, 0.9, 0.4] }}
-                      transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.4 }}
-                    />
-                  ))}
-                </div>
+                {/* Subtle vignette/gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120]/80 via-transparent to-transparent pointer-events-none" />
               </div>
 
-              <div className="space-y-2 z-10">
-                <div className="h-2 w-1/3 bg-white/20 rounded-full" />
-                <div className="h-2 w-3/4 bg-white/10 rounded-full" />
-                <div className="h-2 w-1/2 bg-white/10 rounded-full" />
+              {/* Bottom Feature Pill Card */}
+              <div className="relative z-10 mt-2 p-3 sm:p-3.5 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md grid grid-cols-3 gap-2 text-left">
+                {/* Item 1 */}
+                <div className="flex items-center gap-2.5 p-1">
+                  <div className="w-8 h-8 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0">
+                    <span className="text-sm">⚛</span>
+                  </div>
+                  <div>
+                    <h5 className="text-[11px] sm:text-xs font-bold text-white leading-tight">AI Automation</h5>
+                    <p className="text-[9px] sm:text-[10px] text-foreground-muted leading-tight">Smart Solutions</p>
+                  </div>
+                </div>
+
+                {/* Item 2 */}
+                <div className="flex items-center gap-2.5 p-1 border-l border-white/5 pl-2">
+                  <div className="w-8 h-8 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+                    <span className="text-sm">💻</span>
+                  </div>
+                  <div>
+                    <h5 className="text-[11px] sm:text-xs font-bold text-white leading-tight">Web Development</h5>
+                    <p className="text-[9px] sm:text-[10px] text-foreground-muted leading-tight">Scalable Platforms</p>
+                  </div>
+                </div>
+
+                {/* Item 3 */}
+                <div className="flex items-center gap-2.5 p-1 border-l border-white/5 pl-2">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+                    <span className="text-sm">🚀</span>
+                  </div>
+                  <div>
+                    <h5 className="text-[11px] sm:text-xs font-bold text-white leading-tight">Digital Systems</h5>
+                    <p className="text-[9px] sm:text-[10px] text-foreground-muted leading-tight">Powerful Infra</p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Floating metric card */}
+            {/* Floating Top-Right Conversion Rate Glass Badge */}
             <motion.div
-              animate={{ y: [0, 14, 0], x: [0, -8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, delay: 1 }}
-              className="absolute -top-8 -right-8 glass-card p-4 rounded-2xl flex items-center gap-3 border border-white/10"
+              animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-6 -right-4 sm:-right-6 rounded-2xl p-3.5 sm:p-4 bg-[#0F172A]/85 border border-white/15 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 min-w-[150px] sm:min-w-[170px]"
             >
-              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-accent flex-shrink-0" />
-              <div className="space-y-0.5">
-                <div className="text-xs text-foreground-muted">Conversion Rate</div>
-                <div className="text-sm font-bold text-white">+248%</div>
+              <div className="text-[11px] font-medium text-foreground-muted">Conversion Rate</div>
+              <div className="text-xl sm:text-2xl font-display font-extrabold text-white my-0.5 tracking-tight">
+                +248%
               </div>
-            </motion.div>
-
-            {/* Floating chart */}
-            <motion.div
-              animate={{ y: [0, -14, 0], x: [0, 8, 0] }}
-              transition={{ duration: 6, repeat: Infinity, delay: 2 }}
-              className="absolute -bottom-12 -left-12 glass-card p-4 rounded-2xl border border-white/10"
-            >
-              <div className="flex items-end gap-1.5">
-                {[8, 12, 6, 16, 10, 18].map((h, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-3 rounded-sm"
-                    style={{ height: `${h * 2}px`, background: i % 2 === 0 ? "rgb(59,130,246)" : "rgb(34,211,238)" }}
-                    animate={{ height: [`${h * 2}px`, `${(h + 4) * 2}px`, `${h * 2}px`] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+              {/* Green trend line graph */}
+              <div className="flex items-center my-1.5">
+                <svg className="w-full h-5 stroke-emerald-400 fill-none" viewBox="0 0 100 20">
+                  <path
+                    d="M 2 16 L 18 13 L 32 15 L 48 9 L 64 12 L 80 5 L 98 2"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
-                ))}
+                </svg>
               </div>
+              <div className="text-[10px] text-foreground-muted/80">vs Last 30 Days</div>
             </motion.div>
           </motion.div>
         </motion.div>
