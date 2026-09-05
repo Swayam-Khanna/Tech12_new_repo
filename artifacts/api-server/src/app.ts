@@ -40,4 +40,21 @@ app.use("/api/uploads", express.static(UPLOADS_DIR, {
 
 app.use("/api", router);
 
+// Serve frontend static files in production
+const FRONTEND_DIST = join(__dirname, "../../techtitans-ai/dist");
+app.use(express.static(FRONTEND_DIST));
+
+// SPA Fallback: Send index.html for non-API routes
+app.get("*", (req, res, next) => {
+  if (req.path.startsWith("/api")) {
+    return next();
+  }
+  res.sendFile(join(FRONTEND_DIST, "index.html"), (err) => {
+    if (err) {
+      next();
+    }
+  });
+});
+
 export default app;
+
