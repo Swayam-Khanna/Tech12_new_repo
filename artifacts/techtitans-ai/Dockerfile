@@ -7,4 +7,6 @@ RUN pnpm --filter @workspace/techtitans-ai run build
 
 FROM nginx:alpine
 COPY --from=build /repo/artifacts/techtitans-ai/dist /usr/share/nginx/html
+COPY artifacts/techtitans-ai/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
+

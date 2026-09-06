@@ -44,9 +44,9 @@ app.use("/api", router);
 const FRONTEND_DIST = join(__dirname, "../../techtitans-ai/dist");
 app.use(express.static(FRONTEND_DIST));
 
-// SPA Fallback: Send index.html for non-API routes
-app.get("*", (req, res, next) => {
-  if (req.path.startsWith("/api")) {
+// SPA Fallback: Send index.html for non-API routes (Express 5 compatible)
+app.use((req, res, next) => {
+  if (req.method !== "GET" || req.path.startsWith("/api")) {
     return next();
   }
   res.sendFile(join(FRONTEND_DIST, "index.html"), (err) => {
