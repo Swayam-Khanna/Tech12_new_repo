@@ -165,7 +165,7 @@ export default function AdminDashboard() {
               <Zap className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-display font-bold text-white">ABVT Technology CMS</h1>
+              <h1 className="text-xl font-display font-bold text-white">AVBT Technology CMS</h1>
               <p className="text-foreground-muted text-xs">Admin Dashboard</p>
             </div>
           </div>

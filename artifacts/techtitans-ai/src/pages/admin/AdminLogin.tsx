@@ -46,7 +46,7 @@ export default function AdminLogin() {
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-5">
               <Zap className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-2xl font-display font-bold text-white">ABVT Admin</h1>
+            <h1 className="text-2xl font-display font-bold text-white">AVBT Admin</h1>
             <p className="text-foreground-muted text-sm mt-1">Private access only — authorized personnel</p>
           </div>
 

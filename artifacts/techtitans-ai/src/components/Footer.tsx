@@ -8,11 +8,11 @@ export function Footer() {
           {/* Brand/Logo Column */}
           <div className="flex flex-col items-start">
             <a href="#" className="mb-3 inline-block">
-              <div className="w-16 h-16 flex items-center justify-center">
-                <img src="/logo.png" alt="ABVT Technology" className="w-full h-full object-contain" />
+              <div className="h-12 w-auto max-w-[200px] flex items-center justify-start">
+                <img src="/logo.png" alt="AVBT Technology" className="h-full w-auto object-contain drop-shadow-[0_2px_10px_rgba(59,130,246,0.3)]" />
               </div>
             </a>
-            <h3 className="font-display text-white text-xl font-bold mb-1">ABVT Technology</h3>
+            <h3 className="font-display text-white text-xl font-bold mb-1">AVBT Technology</h3>
             <p className="text-xs text-neutral-500 mb-4 font-sans">Empowering Digital Realities</p>
             <div className="flex items-center gap-2.5">
               <a
@@ -96,9 +96,9 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
-          <p>© 2026 ABVT Technology. All rights reserved.</p>
+          <p>© 2026 AVBT Technology. All rights reserved.</p>
           <div className="flex items-center gap-2">
-            <span>Powered By ABVT Technology</span>
+            <span>Powered By AVBT Technology</span>
             <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
           </div>
         </div>

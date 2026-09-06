@@ -273,7 +273,7 @@ export function Hero() {
               <div className="relative z-10 my-3 rounded-2xl overflow-hidden border border-white/10 shadow-lg">
                 <motion.img
                   src="/images/hero-tech-office.jpg"
-                  alt="ABVT Technology Modern Infrastructure & Development Workspace"
+                  alt="AVBT Technology Modern Infrastructure & Development Workspace"
                   className="w-full h-[260px] sm:h-[300px] object-cover object-center transform transition-transform duration-700 hover:scale-105"
                   animate={{ scale: [1, 1.015, 1] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}

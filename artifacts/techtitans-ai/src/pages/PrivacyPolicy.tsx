@@ -30,7 +30,7 @@ We will never sell, rent, or trade your personal information to third parties fo
   },
   {
     title: "3. Services We Provide",
-    content: `ABVT Technology provides the following digital services to clients:
+    content: `AVBT Technology provides the following digital services to clients:
 
 • **Branding & Identity Design** — Logo design, brand guidelines, color systems, typography, and visual identity development.
 • **Web Development** — Custom website and web application development using modern technologies including React, Node.js, and more.
@@ -92,7 +92,7 @@ To exercise any of these rights, please contact us at info@abvttechnology.com.`,
     title: "10. Contact Us",
     content: `If you have any questions, concerns, or requests regarding this Privacy Policy, please contact us:
 
-**ABVT Technology**
+**AVBT Technology**
 #134/19, Ground Floor, AVBT Building, ITI Road, Solan (H.P.) 173212
 Email: techtitansai@zohomail.in
 Phone: 8979768681 | 7876799926 | 86270 79550`,
@@ -124,7 +124,7 @@ export default function PrivacyPolicy() {
             Last Revised: <span className="text-white">March 2025</span>
           </p>
           <p className="text-foreground-muted mt-4 leading-relaxed">
-            At ABVT Technology, we respect your privacy and are committed to protecting your personal information.
+            At AVBT Technology, we respect your privacy and are committed to protecting your personal information.
             This Privacy Policy explains how we collect, use, and safeguard the data you share with us when you
             visit our website or engage our services.
           </p>
