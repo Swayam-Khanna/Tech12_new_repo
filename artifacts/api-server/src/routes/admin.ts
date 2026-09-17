@@ -133,6 +133,13 @@ router.post("/admin/projects", requireAdmin, async (req, res, next) => {
       imagePosition: body.imagePosition || "center",
       coverImagePosition: body.coverImagePosition || "center",
       gallery: body.gallery || [],
+      clientName: body.clientName || undefined,
+      industry: body.industry || undefined,
+      budget: body.budget || undefined,
+      ctaLink: body.ctaLink || undefined,
+      liveLink: body.liveLink || undefined,
+      behanceLink: body.behanceLink || undefined,
+      toolsUsed: body.toolsUsed || [],
     });
 
     res.status(201).json(project);

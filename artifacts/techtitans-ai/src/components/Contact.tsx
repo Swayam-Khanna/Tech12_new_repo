@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { FadeIn } from "./ui/fade-in";
+import { servicesData } from "@/data/servicesData";
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -12,8 +13,13 @@ export function Contact() {
     name: "",
     email: "",
     service: "",
+    subService: "",
     message: "",
   });
+
+  const currentService = servicesData.find(
+    (s) => s.shortTitle === form.service || s.title === form.service || s.id === form.service
+  );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -40,7 +46,7 @@ export function Contact() {
       }
 
       setIsSuccess(true);
-      setForm({ name: "", email: "", service: "", message: "" });
+      setForm({ name: "", email: "", service: "", subService: "", message: "" });
       setTimeout(() => setIsSuccess(false), 6000);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Failed to send. Please try again.");
@@ -119,7 +125,10 @@ export function Contact() {
                     required
                     name="service"
                     value={form.service}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      const selectedVal = e.target.value;
+                      setForm((prev) => ({ ...prev, service: selectedVal, subService: "" }));
+                    }}
                     className="w-full bg-[#111827] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all appearance-none"
                     style={{
                       backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
@@ -129,12 +138,44 @@ export function Contact() {
                     }}
                   >
                     <option value="" disabled className="bg-[#111827] text-white/50">Select a service...</option>
-                    <option value="Branding" className="bg-[#111827] text-white">Branding</option>
-                    <option value="Video Editing" className="bg-[#111827] text-white">Video Editing</option>
-                    <option value="Graphic Design" className="bg-[#111827] text-white">Graphic Design</option>
-                    <option value="Web Development" className="bg-[#111827] text-white">Web Development</option>
+                    {servicesData.map((s) => (
+                      <option key={s.id} value={s.shortTitle} className="bg-[#111827] text-white">
+                        {s.shortTitle}
+                      </option>
+                    ))}
                   </select>
                 </div>
+
+                {/* Sub-category dropdown (Appears dynamically based on selected service) */}
+                {currentService && currentService.subServices.length > 0 && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm font-medium text-white/80 ml-1">Sub-Category</label>
+                      <span className="text-xs text-primary font-medium">Specific Requirement</span>
+                    </div>
+                    <select
+                      name="subService"
+                      value={form.subService}
+                      onChange={handleChange}
+                      className="w-full bg-[#111827] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all appearance-none"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2338BDF8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "right 1rem center",
+                        backgroundSize: "1.2em",
+                      }}
+                    >
+                      <option value="" className="bg-[#111827] text-white/50">
+                        Select a sub-category (e.g. {currentService.subServices[0]?.title})...
+                      </option>
+                      {currentService.subServices.map((sub) => (
+                        <option key={sub.id} value={sub.title} className="bg-[#111827] text-white">
+                          {sub.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-white/80 ml-1">Message</label>

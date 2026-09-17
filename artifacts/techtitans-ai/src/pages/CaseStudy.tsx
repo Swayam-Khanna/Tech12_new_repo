@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft, Calendar, Clock, ArrowUpRight, Loader2,
   X, ChevronLeft, ChevronRight, Maximize2, ExternalLink,
-  Tag, Layers, ZoomIn
+  Tag, Layers, ZoomIn, Briefcase, Building, Play, Globe,
+  CheckCircle2, Sparkles, MonitorPlay
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -144,10 +145,10 @@ function ImageGallery({ images, title }: { images: string[]; title: string }) {
         {single ? (
           <div
             onClick={() => open(0)}
-            className="group relative cursor-zoom-in rounded-2xl md:rounded-3xl overflow-hidden glass-card"
+            className="group relative cursor-zoom-in rounded-2xl md:rounded-3xl overflow-hidden glass-card max-h-[75vh] flex items-center justify-center bg-black/40"
           >
-            <img src={images[0]} alt={title} className="w-full h-auto block group-hover:scale-[1.02] transition-transform duration-700" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <img src={images[0]} alt={title} className="max-h-[75vh] w-auto max-w-full object-contain block group-hover:scale-[1.01] transition-transform duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border border-white/20">
               <ZoomIn className="w-4 h-4 text-white" />
             </div>
@@ -155,9 +156,9 @@ function ImageGallery({ images, title }: { images: string[]; title: string }) {
         ) : two ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
             {images.map((src, i) => (
-              <div key={i} onClick={() => open(i)} className="group relative cursor-zoom-in rounded-2xl overflow-hidden glass-card">
-                <img src={src} alt={`${title} ${i + 1}`} className="w-full h-auto block group-hover:scale-[1.02] transition-transform duration-700" />
-                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <div key={i} onClick={() => open(i)} className="group relative cursor-zoom-in rounded-2xl overflow-hidden glass-card max-h-[60vh] flex items-center justify-center bg-black/40">
+                <img src={src} alt={`${title} ${i + 1}`} className="max-h-[60vh] w-auto max-w-full object-contain block group-hover:scale-[1.01] transition-transform duration-700" />
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                   <ZoomIn className="w-6 h-6 text-white" />
                 </div>
               </div>
@@ -167,9 +168,9 @@ function ImageGallery({ images, title }: { images: string[]; title: string }) {
           /* 3+ images: featured first, rest in grid */
           <div className="space-y-3 md:space-y-4">
             {/* Main image */}
-            <div onClick={() => open(0)} className="group relative cursor-zoom-in rounded-2xl md:rounded-3xl overflow-hidden glass-card">
-              <img src={images[0]} alt={title} className="w-full h-auto block group-hover:scale-[1.02] transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div onClick={() => open(0)} className="group relative cursor-zoom-in rounded-2xl md:rounded-3xl overflow-hidden glass-card max-h-[70vh] flex items-center justify-center bg-black/40">
+              <img src={images[0]} alt={title} className="max-h-[70vh] w-auto max-w-full object-contain block group-hover:scale-[1.01] transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border border-white/20">
                 <ZoomIn className="w-4 h-4 text-white" />
               </div>
@@ -184,18 +185,18 @@ function ImageGallery({ images, title }: { images: string[]; title: string }) {
                   <div
                     key={i + 1}
                     onClick={() => open(i + 1)}
-                    className="group relative cursor-zoom-in rounded-xl md:rounded-2xl overflow-hidden glass-card"
+                    className="group relative cursor-zoom-in rounded-xl md:rounded-2xl overflow-hidden glass-card max-h-[350px] min-h-[160px] flex items-center justify-center bg-black/40"
                   >
-                    <img src={src} alt={`${title} ${i + 2}`} className="w-full h-auto block group-hover:scale-[1.03] transition-transform duration-500" />
+                    <img src={src} alt={`${title} ${i + 2}`} className="max-h-[350px] w-auto max-w-full object-contain block group-hover:scale-[1.02] transition-transform duration-500" />
                     {isLast && remaining > 0 ? (
-                      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center">
+                      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center pointer-events-none">
                         <div className="text-center">
                           <p className="text-white text-2xl font-bold">+{remaining}</p>
                           <p className="text-white/70 text-sm">more</p>
                         </div>
                       </div>
                     ) : (
-                      <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                         <ZoomIn className="w-5 h-5 text-white" />
                       </div>
                     )}
@@ -224,13 +225,39 @@ export default function CaseStudy() {
 
   const service = servicesData.find((s) => s.id === project?.serviceId);
 
-  /* Build gallery: main image + gallery extras */
+  /* Build gallery: if project has gallery images, use them; otherwise fallback to thumbnail image */
   const galleryImages: string[] = project
-    ? [
-        ...(project.image ? [project.image] : []),
-        ...(project.gallery?.filter((g: string) => g && g !== project.image) || []),
-      ]
+    ? (project.gallery && project.gallery.length > 0)
+      ? project.gallery
+      : (project.image ? [project.image] : [])
     : [];
+
+  const isWeb =
+    project?.serviceId === "web" ||
+    project?.category?.toLowerCase().includes("web") ||
+    project?.subCategory?.toLowerCase().includes("commerce") ||
+    project?.subCategory?.toLowerCase().includes("web");
+
+  const isVideo =
+    project?.serviceId === "video" ||
+    project?.category?.toLowerCase().includes("video") ||
+    project?.subCategory?.toLowerCase().includes("video") ||
+    project?.subCategory?.toLowerCase().includes("reel");
+
+  const isInteractiveMedia = isWeb || isVideo;
+  const isReel =
+    isVideo &&
+    (project?.subServiceId === "reels" ||
+      project?.subCategory?.toLowerCase().includes("reel") ||
+      project?.title?.toLowerCase().includes("reel"));
+
+  const actionUrl = project?.liveLink || "";
+  const displayImage = project?.image || project?.coverImage || (galleryImages[0] ?? "");
+  const actionButtonText = isWeb
+    ? "View Website"
+    : isReel
+    ? "View Reel"
+    : "View Video";
 
   if (isLoading) {
     return (
@@ -307,17 +334,33 @@ export default function CaseStudy() {
             </h1>
             <p className="text-foreground-muted text-base md:text-xl max-w-2xl leading-relaxed">{project.tagline}</p>
 
-            {/* Quick links */}
-            <div className="flex flex-wrap gap-3 mt-5 md:mt-7">
-              {project.liveLink && (
-                <a href={project.liveLink} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 border border-white/20 px-4 py-2 rounded-xl transition-all">
-                  <ExternalLink className="w-3.5 h-3.5" /> View Live
+            {/* Quick links & Direct Action Buttons */}
+            <div className="flex flex-wrap items-center gap-3 mt-5 md:mt-7">
+              {actionUrl ? (
+                <a
+                  href={actionUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-gradient-to-r from-primary to-accent hover:opacity-90 shadow-lg hover:shadow-primary/20 px-5 py-2.5 rounded-xl transition-all scale-100 hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  {isWeb ? <Globe className="w-4 h-4" /> : isVideo ? <Play className="w-4 h-4 fill-current" /> : <ExternalLink className="w-4 h-4" />}
+                  <span>{actionButtonText}</span>
+                  <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                 </a>
-              )}
+              ) : isInteractiveMedia ? (
+                <span className="inline-flex items-center gap-2 text-xs font-medium text-foreground-muted bg-white/5 border border-white/10 px-4 py-2 rounded-xl">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  Verified Case Study
+                </span>
+              ) : null}
+
               {project.behanceLink && (
-                <a href={project.behanceLink} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 border border-white/20 px-4 py-2 rounded-xl transition-all">
+                <a
+                  href={project.behanceLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 border border-white/20 px-4 py-2 rounded-xl transition-all"
+                >
                   <ArrowUpRight className="w-3.5 h-3.5" /> View on Behance
                 </a>
               )}
@@ -329,26 +372,75 @@ export default function CaseStudy() {
       {/* ── Body ─────────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 py-10 md:py-16">
 
-        {/* Meta strip */}
+        {/* Meta strip - Always full 4 cohesive blocks (Category, Year, Client/Deliverable, and Live Status / Action) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/8 rounded-2xl overflow-hidden mb-12 md:mb-20 border border-white/8"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden mb-12 md:mb-20 border border-white/10 shadow-xl"
         >
-          {[
-            { label: "Category", value: project.subCategory || project.category, icon: <Layers className="w-3 h-3" /> },
-            { label: "Year", value: project.year, icon: <Calendar className="w-3 h-3" /> },
-            { label: "Duration", value: project.duration, icon: <Clock className="w-3 h-3" /> },
-            { label: "Services", value: `${project.services.length} delivered`, icon: <Tag className="w-3 h-3" /> },
-          ].map(({ label, value, icon }) => (
-            <div key={label} className="bg-background/80 backdrop-blur-sm px-5 md:px-8 py-5 md:py-6">
-              <p className="text-foreground-muted text-xs uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
-                {icon} {label}
-              </p>
-              <p className="text-white font-semibold text-sm md:text-base">{value}</p>
-            </div>
-          ))}
+          {/* Block 1: Category / Sub-Category */}
+          <div className="bg-background/80 backdrop-blur-sm px-5 md:px-7 py-5 md:py-6 flex flex-col justify-center">
+            <p className="text-foreground-muted text-xs uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-primary" /> Category
+            </p>
+            <p className="text-white font-semibold text-sm md:text-base truncate">
+              {project.subCategory || project.category || "Creative Design"}
+            </p>
+          </div>
+
+          {/* Block 2: Year / Timeline */}
+          <div className="bg-background/80 backdrop-blur-sm px-5 md:px-7 py-5 md:py-6 flex flex-col justify-center">
+            <p className="text-foreground-muted text-xs uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5 text-primary" /> Year
+            </p>
+            <p className="text-white font-semibold text-sm md:text-base">
+              {project.year || "2026"}
+            </p>
+          </div>
+
+          {/* Block 3: Client / Deliverable Type */}
+          <div className="bg-background/80 backdrop-blur-sm px-5 md:px-7 py-5 md:py-6 flex flex-col justify-center">
+            <p className="text-foreground-muted text-xs uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+              {project.clientName ? (
+                <Briefcase className="w-3.5 h-3.5 text-primary" />
+              ) : (
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+              )}
+              {project.clientName ? "Client" : "Deliverable"}
+            </p>
+            <p className="text-white font-semibold text-sm md:text-base truncate">
+              {project.clientName || (isWeb ? "Web Application" : isVideo ? (isReel ? "Social Reel Video" : "Video Production") : "Design System")}
+            </p>
+          </div>
+
+          {/* Block 4: Live Link / Direct Action */}
+          <div className="bg-background/80 backdrop-blur-sm px-5 md:px-7 py-5 md:py-6 flex flex-col justify-center">
+            <p className="text-foreground-muted text-xs uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+              {isInteractiveMedia ? (
+                <Globe className="w-3.5 h-3.5 text-emerald-400" />
+              ) : (
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              )}
+              {actionUrl ? "Direct Link" : "Project Status"}
+            </p>
+            {actionUrl ? (
+              <a
+                href={actionUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-primary hover:text-accent font-semibold text-sm transition-colors group/meta"
+              >
+                <span className="truncate">{actionButtonText}</span>
+                <ExternalLink className="w-3.5 h-3.5 group-hover/meta:translate-x-0.5 transition-transform flex-shrink-0" />
+              </a>
+            ) : (
+              <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Production Ready</span>
+              </div>
+            )}
+          </div>
         </motion.div>
 
         {/* Results */}
@@ -382,9 +474,105 @@ export default function CaseStudy() {
           </motion.div>
         )}
 
-        {/* ── Image Gallery ─────────────────────────────────── */}
-        {galleryImages.length > 0 && (
-          <ImageGallery images={galleryImages} title={project.title} />
+        {/* ── Image Showcase / Interactive Card ── */}
+        {isInteractiveMedia ? (
+          /* Web Development & Video Editing: Dedicated interactive card matching image natural fit, clickable to live link with action button */
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mb-16 md:mb-24"
+          >
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-primary font-semibold tracking-widest text-sm uppercase">
+                {isWeb ? "Live Website Showcase" : isReel ? "Reel Video Showcase" : "Video Showcase"}
+              </p>
+              {actionUrl && (
+                <span className="text-foreground-muted text-xs flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  Click image or button to view in new tab
+                </span>
+              )}
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              <div className="rounded-2xl md:rounded-3xl border border-white/15 bg-white/[0.03] backdrop-blur-md overflow-hidden shadow-2xl transition-all duration-300 hover:border-primary/40 group">
+                {/* Clickable Image hugging natural fit */}
+                {actionUrl ? (
+                  <a
+                    href={actionUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative block w-full bg-black/60 overflow-hidden cursor-pointer group/link"
+                  >
+                    <img
+                      src={displayImage}
+                      alt={project.title}
+                      className="w-full h-auto max-h-[78vh] object-contain mx-auto block group-hover/link:scale-[1.015] transition-transform duration-500"
+                    />
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/link:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 backdrop-blur-[2px]">
+                      <div className="w-14 h-14 rounded-full bg-primary text-black flex items-center justify-center shadow-lg transform group-hover/link:scale-110 transition-transform">
+                        {isWeb ? <Globe className="w-7 h-7" /> : <Play className="w-7 h-7 ml-0.5 fill-current" />}
+                      </div>
+                      <span className="text-white font-display font-semibold text-sm px-4 py-1.5 rounded-full bg-black/60 border border-white/20">
+                        {actionButtonText} <ExternalLink className="w-3.5 h-3.5 inline ml-1" />
+                      </span>
+                    </div>
+                  </a>
+                ) : (
+                  <div className="relative block w-full bg-black/60 overflow-hidden">
+                    <img
+                      src={displayImage}
+                      alt={project.title}
+                      className="w-full h-auto max-h-[78vh] object-contain mx-auto block"
+                    />
+                  </div>
+                )}
+
+                {/* Card Footer with Direct Action Button */}
+                <div className="p-5 md:p-6 bg-background/90 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-white font-display font-bold text-lg">{project.title}</h3>
+                    <p className="text-foreground-muted text-xs mt-0.5">
+                      {project.subCategory || project.category} {project.clientName ? `• ${project.clientName}` : ""}
+                    </p>
+                  </div>
+
+                  {actionUrl ? (
+                    <a
+                      href={actionUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-sm font-semibold shadow-lg hover:shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    >
+                      {isWeb ? (
+                        <Globe className="w-4 h-4" />
+                      ) : (
+                        <Play className="w-4 h-4 fill-current" />
+                      )}
+                      <span>{actionButtonText}</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  ) : (
+                    <button
+                      onClick={() => navigate("/#contact")}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-semibold transition-all hover:scale-[1.02]"
+                    >
+                      {isWeb ? <Globe className="w-4 h-4 text-primary" /> : <Play className="w-4 h-4 text-primary fill-current" />}
+                      <span>{actionButtonText} (Live on Request)</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ) : (
+          /* Other Services: Multi-image lightbox gallery */
+          galleryImages.length > 0 && (
+            <ImageGallery images={galleryImages} title={project.title} />
+          )
         )}
 
         {/* ── Case Study Content + Sidebar ────────────────── */}
@@ -395,12 +583,14 @@ export default function CaseStudy() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="lg:col-span-2 space-y-10 md:space-y-14"
+            className="lg:col-span-2 space-y-8"
           >
             {project.overview && (
               <div>
-                <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">Overview</p>
-                <p className="text-foreground-muted text-base md:text-lg leading-relaxed">{project.overview}</p>
+                <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">Case Study Overview</p>
+                <div className="text-foreground-muted text-base md:text-lg leading-relaxed whitespace-pre-line glass-card rounded-2xl p-6 md:p-8 border border-white/5">
+                  {project.overview}
+                </div>
               </div>
             )}
             {project.challenge && (
@@ -425,9 +615,9 @@ export default function CaseStudy() {
             className="space-y-4 md:space-y-5"
           >
             {/* Services */}
-            {project.services?.length > 0 && (
+            {project.services && project.services.length > 0 && (
               <div className="glass-card rounded-2xl p-5 md:p-6">
-                <p className="text-foreground-muted text-xs uppercase tracking-widest mb-4">Services Provided</p>
+                <p className="text-foreground-muted text-xs uppercase tracking-widest mb-4">Service Category</p>
                 <ul className="space-y-2.5">
                   {project.services.map((svc: string) => (
                     <li key={svc} className="flex items-center gap-3">
@@ -477,7 +667,14 @@ export default function CaseStudy() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl border border-white/15 bg-white/5 text-white text-sm font-medium hover:bg-white/10 hover:border-white/30 transition-all"
               >
-                <ExternalLink className="w-4 h-4" /> View Live Project
+                {isWeb ? (
+                  <Globe className="w-4 h-4 text-primary" />
+                ) : isVideo ? (
+                  <Play className="w-4 h-4 text-primary fill-current" />
+                ) : (
+                  <ExternalLink className="w-4 h-4" />
+                )}
+                <span>{isInteractiveMedia ? actionButtonText : "View Live Project"}</span>
               </a>
             )}
           </motion.div>

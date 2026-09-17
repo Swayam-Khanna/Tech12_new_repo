@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 const router: IRouter = Router();
 
 router.post("/contact", async (req, res) => {
-  const { name, email, service, message } = req.body;
+  const { name, email, service, subService, message } = req.body;
 
   if (!name || !email || !service || !message) {
     res.status(400).json({ success: false, error: "All fields are required." });
@@ -33,11 +33,13 @@ router.post("/contact", async (req, res) => {
     },
   });
 
+  const subjectService = subService ? `${service} (${subService})` : service;
+
   const mailOptions = {
-    from: `"TechTitans AI Contact" <${emailUser}>`,
+    from: `"AVBT Technology Contact" <${emailUser}>`,
     to: contactReceiver,
     replyTo: email,
-    subject: `New Inquiry: ${service} — from ${name}`,
+    subject: `New Inquiry: ${subjectService} — from ${name}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0B0F19; color: #ffffff; padding: 32px; border-radius: 12px;">
         <h2 style="color: #3B82F6; margin-top: 0;">New Contact Form Submission</h2>
@@ -55,13 +57,18 @@ router.post("/contact", async (req, res) => {
             <td style="padding: 10px 0; color: #9CA3AF; vertical-align: top;">Service</td>
             <td style="padding: 10px 0; color: #22C55E; font-weight: bold;">${service}</td>
           </tr>
+          ${subService ? `
+          <tr>
+            <td style="padding: 10px 0; color: #9CA3AF; vertical-align: top;">Sub-Category</td>
+            <td style="padding: 10px 0; color: #38BDF8; font-weight: bold;">${subService}</td>
+          </tr>` : ""}
           <tr>
             <td style="padding: 10px 0; color: #9CA3AF; vertical-align: top;">Message</td>
             <td style="padding: 10px 0; color: #ffffff;">${message.replace(/\n/g, "<br/>")}</td>
           </tr>
         </table>
         <hr style="border-color: rgba(255,255,255,0.1); margin-top: 24px;" />
-        <p style="color: #6B7280; font-size: 12px; margin-bottom: 0;">Sent from TechTitans AI website contact form</p>
+        <p style="color: #6B7280; font-size: 12px; margin-bottom: 0;">Sent from AVBT Technology website contact form</p>
       </div>
     `,
   };

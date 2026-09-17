@@ -1,4 +1,5 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import type { Readable } from "stream";
 
 const endpoint = process.env.AWS_ENDPOINT_URL_S3;
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
@@ -25,6 +26,7 @@ export async function uploadToNeonS3(file: Express.Multer.File, folder = "upload
     throw new Error("Neon S3 storage is not configured.");
   }
 
+  const cleanName = (file.originalname || "image.png").replace(/[^a-zA-Z0-9.-]/g, "_");
   const key = `${folder}/${Date.now()}-${cleanName}`;
 
   await s3Client.send(
@@ -36,6 +38,24 @@ export async function uploadToNeonS3(file: Express.Multer.File, folder = "upload
     })
   );
 
-  const normalizedEndpoint = endpoint!.replace(/\/+$/, "");
-  return `${normalizedEndpoint}/${BUCKET_NAME}/${key}`;
+  return `/api/assets/${key}`;
+}
+
+export async function getObjectFromS3(key: string) {
+  if (!s3Client) {
+    throw new Error("Neon S3 storage is not configured.");
+  }
+
+  const res = await s3Client.send(
+    new GetObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: key,
+    })
+  );
+
+  return {
+    stream: res.Body as Readable,
+    contentType: res.ContentType || "application/octet-stream",
+    contentLength: res.ContentLength,
+  };
 }

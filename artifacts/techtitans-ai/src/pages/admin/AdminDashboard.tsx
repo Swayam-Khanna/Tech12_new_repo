@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Plus, Search, LogOut, Star, Globe, Edit3, Trash2,
   LayoutDashboard, Eye, EyeOff, Zap, FileText, Layers,
-  Copy, Archive, ArchiveRestore, ChevronDown
+  Copy, Archive, ArchiveRestore, ChevronDown, RefreshCw
 } from "lucide-react";
 import { useAdminAuth } from "@/contexts/AdminAuthContext";
 import { api } from "@/lib/api";
@@ -45,18 +45,31 @@ export default function AdminDashboard() {
   const [toast, setToast] = useState("");
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
-  const load = async () => {
+  const load = async (silent = false) => {
+    if (!silent) setLoading(true);
     try {
       const data = await api.admin.projects.list();
       setProjects(data);
-    } catch {
-      navigate("/admin");
+    } catch (err: any) {
+      if (err?.message?.includes("Unauthorized") || err?.message?.includes("Invalid token")) {
+        logout();
+        navigate("/admin");
+      } else {
+        showToast("Error refreshing projects: " + (err?.message || "Network issue"));
+      }
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
-  useEffect(() => { load(); }, []);
+  // Initial load + Real-time auto-refresh poll every 10 seconds
+  useEffect(() => {
+    load();
+    const interval = setInterval(() => {
+      load(true);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -170,6 +183,15 @@ export default function AdminDashboard() {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => { load(); showToast("Refreshing projects..."); }}
+              disabled={loading}
+              title="Refresh live data"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg border border-white/10 bg-white/5 text-foreground-muted hover:text-primary text-sm transition-all"
+            >
+              <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-primary" : ""}`} />
+              <span className="hidden sm:inline">Refresh</span>
+            </button>
             <button onClick={() => window.open("/", "_blank")}
               className="flex items-center gap-2 px-3 py-2 rounded-lg border border-white/10 bg-white/5 text-foreground-muted hover:text-white text-sm transition-all">
               <Globe className="w-4 h-4" /> <span className="hidden sm:inline">View Site</span>
@@ -312,35 +334,53 @@ export default function AdminDashboard() {
                       </button>
                       {/* Edit */}
                       <button onClick={() => navigate(`/admin/projects/${project.id}/edit`)} title="Edit project"
-                        className="p-1.5 rounded-lg text-white/20 hover:text-primary hover:bg-white/5 transition-all">
+                        className="p-1.5 rounded-lg text-white/40 hover:text-primary hover:bg-white/5 transition-all">
                         <Edit3 className="w-4 h-4" />
+                      </button>
+                      {/* Direct Delete button */}
+                      <button
+                        onClick={() => handleDelete(project.id, project.title)}
+                        title="Delete project"
+                        className="p-1.5 rounded-lg text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                      >
+                        <Trash2 className="w-4 h-4" />
                       </button>
                       {/* More actions dropdown */}
                       <div className="relative">
                         <button onClick={(e) => { e.stopPropagation(); setOpenMenu(openMenu === project.id ? null : project.id); }}
-                          className="p-1.5 rounded-lg text-white/20 hover:text-white hover:bg-white/5 transition-all">
+                          className="p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/5 transition-all"
+                          title="More options">
                           <ChevronDown className="w-4 h-4" />
                         </button>
                         <AnimatePresence>
                           {openMenu === project.id && (
-                            <motion.div initial={{ opacity: 0, scale: 0.95, y: -4 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0.95, y: i >= filtered.length - 2 ? 4 : -4 }}
+                              animate={{ opacity: 1, scale: 1, y: 0 }}
                               exit={{ opacity: 0, scale: 0.95 }}
-                              className="absolute right-0 top-full mt-1 w-44 glass-card rounded-xl border border-white/10 overflow-hidden z-50 shadow-2xl"
-                              onClick={(e) => e.stopPropagation()}>
-                              <button onClick={() => { handleDuplicate(project.id); setOpenMenu(null); }}
-                                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-white hover:bg-white/5 transition-colors">
+                              className={`absolute right-0 ${i >= filtered.length - 2 && filtered.length > 1 ? "bottom-full mb-1" : "top-full mt-1"} w-44 bg-[#0e131f] rounded-xl border border-white/15 overflow-hidden z-[999] shadow-2xl backdrop-blur-xl`}
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <button
+                                onClick={() => { handleDuplicate(project.id); setOpenMenu(null); }}
+                                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-white hover:bg-white/10 transition-colors text-left"
+                              >
                                 <Copy className="w-4 h-4 text-blue-400" /> Duplicate
                               </button>
-                              <button onClick={() => { handleArchive(project.id); setOpenMenu(null); }}
-                                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-white hover:bg-white/5 transition-colors">
+                              <button
+                                onClick={() => { handleArchive(project.id); setOpenMenu(null); }}
+                                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-white hover:bg-white/10 transition-colors text-left"
+                              >
                                 {project.status === "archived"
                                   ? <><ArchiveRestore className="w-4 h-4 text-green-400" /> Unarchive</>
                                   : <><Archive className="w-4 h-4 text-amber-400" /> Archive</>
                                 }
                               </button>
-                              <div className="border-t border-white/5" />
-                              <button onClick={() => { handleDelete(project.id, project.title); setOpenMenu(null); }}
-                                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-400 hover:bg-red-400/10 transition-colors">
+                              <div className="border-t border-white/10" />
+                              <button
+                                onClick={() => { handleDelete(project.id, project.title); setOpenMenu(null); }}
+                                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-400 hover:bg-red-400/15 transition-colors text-left font-medium"
+                              >
                                 <Trash2 className="w-4 h-4" /> Delete
                               </button>
                             </motion.div>

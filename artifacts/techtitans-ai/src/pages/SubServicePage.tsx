@@ -104,32 +104,32 @@ export default function SubServicePage() {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                 {displayProjects.map((project: any, index: number) => (
                   <motion.div
                     key={project.id}
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    transition={{ duration: 0.5, delay: index * 0.08 }}
                     onClick={() => navigate(`/portfolio/${project.id}`)}
                     className="group cursor-pointer"
                   >
-                    <div className="glass-card rounded-3xl overflow-hidden">
-                      <div className="relative overflow-hidden aspect-[16/10.5] w-full bg-gradient-to-br from-white/5 to-white/10">
+                    <div className="glass-card rounded-3xl overflow-hidden border border-white/10 hover:border-primary/40 transition-all duration-300 flex flex-col h-full bg-[#0b0f19]">
+                      <div className="relative overflow-hidden aspect-[16/11] sm:aspect-[4/3] w-full bg-black/40 flex items-center justify-center">
                         <img
                           src={project.image}
                           alt={project.title}
-                          className="w-full h-full object-cover block opacity-75 group-hover:opacity-95 group-hover:scale-[1.03] transition-all duration-700"
+                          className="w-full h-full object-cover block opacity-85 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-700"
                           onError={(e) => {
                             e.currentTarget.style.display = 'none';
                           }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
-                        <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-transparent opacity-80" />
+                        <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-15 transition-opacity duration-500`} />
 
                         <div className="absolute top-4 left-4">
-                          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 backdrop-blur-md border border-white/20 text-white">
-                            {project.subCategory}
+                          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-black/60 backdrop-blur-md border border-white/20 text-white">
+                            {project.subCategory || project.category}
                           </span>
                         </div>
                         <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 -rotate-45 group-hover:rotate-0 transition-all duration-500">
@@ -137,30 +137,21 @@ export default function SubServicePage() {
                         </div>
                       </div>
 
-                      <div className="p-7">
-                        <p className="text-accent text-xs font-semibold mb-2">{project.year} · {project.duration}</p>
-                        <h3 className="text-2xl font-display font-bold text-white mb-2 group-hover:text-primary transition-colors">
-                          {project.title}
-                        </h3>
-                        <p className="text-foreground-muted text-sm mb-5 line-clamp-2">{project.tagline}</p>
+                      <div className="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                          <p className="text-accent text-xs font-semibold mb-1.5">{project.year || "2026"}</p>
+                          <h3 className="text-xl font-display font-bold text-white mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                            {project.title}
+                          </h3>
+                          <p className="text-foreground-muted text-sm line-clamp-2">{project.tagline}</p>
+                        </div>
 
                         {project.tags?.length > 0 && (
-                          <div className="flex flex-wrap gap-2 mb-5">
-                            {project.tags.slice(0, 3).map((tag: string) => (
-                              <span key={tag} className="px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-foreground-muted">
+                          <div className="flex flex-wrap gap-1.5 pt-4">
+                            {project.tags.slice(0, 2).map((tag: string) => (
+                              <span key={tag} className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-white/5 border border-white/10 text-foreground-muted">
                                 {tag}
                               </span>
-                            ))}
-                          </div>
-                        )}
-
-                        {project.results?.length >= 2 && (
-                          <div className="grid grid-cols-2 gap-4 pt-5 border-t border-white/10">
-                            {project.results.slice(0, 2).map((r: any) => (
-                              <div key={r.label}>
-                                <p className="text-xl font-display font-bold text-gradient">{r.value}</p>
-                                <p className="text-xs text-foreground-muted mt-0.5">{r.label}</p>
-                              </div>
                             ))}
                           </div>
                         )}

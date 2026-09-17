@@ -2,7 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import type { Request, Response, NextFunction } from "express";
 import { upload } from "../middlewares/upload";
-import { uploadToNeonS3, isS3Configured } from "../lib/neonS3";
+import { uploadToNeonS3, getObjectFromS3, isS3Configured } from "../lib/neonS3";
 
 const SECRET = process.env["ADMIN_SECRET"] || "tt_secret_key_2024";
 
@@ -58,6 +58,36 @@ router.post("/admin/upload", requireAdmin, (req, res, next) => {
       res.status(500).json({ error: uploadErr.message || "Failed to upload file to storage" });
     }
   });
+});
+
+router.get("/assets/{*key}", async (req, res) => {
+  try {
+    const paramKey = (req.params as any).key;
+    const rawKey = Array.isArray(paramKey) ? paramKey.join("/") : (typeof paramKey === "string" ? paramKey : req.path.replace(/^\/assets\//, ""));
+    const decodedKey = decodeURIComponent(rawKey);
+    if (!decodedKey) {
+      res.status(400).json({ error: "Object key is required" });
+      return;
+    }
+
+    const { stream, contentType, contentLength } = await getObjectFromS3(decodedKey);
+
+    res.setHeader("Content-Type", contentType);
+    if (contentLength) {
+      res.setHeader("Content-Length", contentLength);
+    }
+    res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
+    (stream as any).pipe(res);
+  } catch (err: any) {
+    console.error("Error retrieving asset from S3:", err);
+    if (err.name === "NoSuchKey" || err.$metadata?.httpStatusCode === 404) {
+      res.status(404).json({ error: "Asset not found" });
+      return;
+    }
+    res.status(500).json({ error: err.message || "Failed to retrieve asset" });
+  }
 });
 
 export default router;

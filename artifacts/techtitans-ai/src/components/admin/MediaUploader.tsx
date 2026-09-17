@@ -105,9 +105,9 @@ export function MediaUploader({ label, value, onChange, onDimensions, accept = "
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const isImage = value && value.match(/\.(jpg|jpeg|png|gif|webp|svg)(\?.*)?$/i);
-  const isVideo = value && (value.match(/\.(mp4|webm|mov)(\?.*)?$/i) || uploaded?.type === "video");
-  const isPdf = value && (value.match(/\.pdf(\?.*)?$/i) || uploaded?.type === "pdf");
+  const isVideo = Boolean(value && (value.match(/\.(mp4|webm|mov)(\?.*)?$/i) || uploaded?.type === "video"));
+  const isPdf = Boolean(value && (value.match(/\.pdf(\?.*)?$/i) || uploaded?.type === "pdf"));
+  const isImage = Boolean(value && !isVideo && !isPdf);
 
   // Detect dimensions whenever value changes
   useEffect(() => {
@@ -237,8 +237,16 @@ export function MediaUploader({ label, value, onChange, onDimensions, accept = "
                 )}
               </div>
             ) : (
-              <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/3">
-                {isImage && <img src={value} alt="uploaded" className="w-full h-48 object-cover" />}
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-black/40">
+                {isImage && (
+                  <div className="w-full h-56 flex items-center justify-center p-2 bg-black/20">
+                    <img
+                      src={value}
+                      alt="uploaded"
+                      className="max-h-full max-w-full object-contain rounded-lg"
+                    />
+                  </div>
+                )}
                 {isVideo && <video src={value} className="w-full h-48 object-cover" controls />}
                 {isPdf && (
                   <div className="h-20 flex items-center justify-center gap-3">

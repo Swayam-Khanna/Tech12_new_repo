@@ -3,7 +3,13 @@ const BASE = import.meta.env.VITE_API_URL || "";
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const { headers: extraHeaders, ...rest } = options ?? {};
   const res = await fetch(`${BASE}${path}`, {
-    headers: { "Content-Type": "application/json", ...extraHeaders },
+    cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      Pragma: "no-cache",
+      ...extraHeaders,
+    },
     ...rest,
   });
   if (!res.ok) {

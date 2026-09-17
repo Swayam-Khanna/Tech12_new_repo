@@ -45,31 +45,38 @@ export function Portfolio() {
               <FadeIn key={project.id} delay={0.1 * (index + 1)}>
                 <div
                   onClick={() => navigate(`/portfolio/${project.id}`)}
-                  className="group relative rounded-3xl overflow-hidden glass-card cursor-pointer aspect-[16/11] md:aspect-[4/3] w-full bg-gradient-to-br from-white/5 to-white/10"
+                  className="group relative rounded-3xl overflow-hidden glass-card cursor-pointer border border-white/10 hover:border-primary/40 transition-all duration-300 flex flex-col bg-[#0b0f19]"
                 >
-                  <div className="w-full h-full overflow-hidden">
+                  {/* Image container with fixed aspect ratio and auto-contain fit */}
+                  <div className="relative w-full aspect-[16/11] sm:aspect-[4/3] overflow-hidden bg-black/40 flex items-center justify-center">
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                       }}
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-transparent opacity-80" />
+                    <div className="absolute top-4 left-4">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-black/60 backdrop-blur-md border border-white/20 text-white">
+                        {project.subCategory || project.category}
+                      </span>
+                    </div>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-90 group-hover:opacity-75 transition-opacity duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-accent/30 opacity-0 group-hover:opacity-30 mix-blend-overlay transition-opacity duration-500" />
-                  <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                    <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                      <div className="text-accent text-sm font-semibold mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+
+                  {/* Info footer */}
+                  <div className="p-5 sm:p-6 flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-xs text-primary font-semibold tracking-wider uppercase mb-1">
                         {project.category}
-                      </div>
-                      <h3 className="text-2xl font-display font-bold text-white flex items-center justify-between">
+                      </p>
+                      <h3 className="text-lg sm:text-xl font-display font-bold text-white group-hover:text-primary transition-colors truncate">
                         {project.title}
-                        <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 -rotate-45 group-hover:rotate-0 transition-all duration-500">
-                          <ArrowUpRight className="w-5 h-5 text-white" />
-                        </div>
                       </h3>
+                    </div>
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 group-hover:bg-primary border border-white/20 group-hover:border-primary flex items-center justify-center text-white transition-all flex-shrink-0 group-hover:scale-110">
+                      <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </div>
                   </div>
                 </div>
