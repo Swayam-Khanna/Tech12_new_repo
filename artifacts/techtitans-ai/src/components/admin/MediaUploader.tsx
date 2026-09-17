@@ -188,10 +188,58 @@ export function MediaUploader({ label, value, onChange, onDimensions, accept = "
 
       <AnimatePresence mode="wait">
         {mode === "url" ? (
-          <motion.div key="url" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}>
-            <input className={INPUT} value={value}
-              onChange={(e) => { onChange(e.target.value); setUploaded(null); }}
-              placeholder="https://images.unsplash.com/..." />
+          <motion.div key="url" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} className="space-y-2">
+            <div className="flex gap-2">
+              <input
+                className={INPUT}
+                value={value}
+                onChange={(e) => { onChange(e.target.value); setUploaded(null); }}
+                placeholder="Paste media URL or CDN link (e.g. https://...)"
+              />
+              {value && !value.includes("res.cloudinary.com") && (
+                <button
+                  type="button"
+                  disabled={uploading}
+                  onClick={async () => {
+                    try {
+                      setError("");
+                      setUploading(true);
+                      const token = localStorage.getItem("admin_token") || "";
+                      const res = await fetch("/api/admin/upload-url", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                          Authorization: `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({ url: value }),
+                      });
+                      const data = await res.json();
+                      if (!res.ok) throw new Error(data.error || "Failed to save to Cloudinary");
+                      onChange(data.url);
+                    } catch (err: any) {
+                      setError(err.message || "Failed to upload URL to Cloudinary");
+                    } finally {
+                      setUploading(false);
+                    }
+                  }}
+                  className="px-4 py-2 bg-primary/20 hover:bg-primary/30 border border-primary/40 text-primary text-xs font-semibold rounded-xl whitespace-nowrap transition-all flex items-center gap-1.5"
+                  title="Upload this URL to Cloudinary storage"
+                >
+                  {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                  Save to Cloudinary
+                </button>
+              )}
+            </div>
+            {value && value.includes("res.cloudinary.com") && (
+              <p className="text-[11px] text-emerald-400 flex items-center gap-1">
+                <CheckCircle2 className="w-3 h-3" /> Hosted on Cloudinary CDN
+              </p>
+            )}
+            {error && (
+              <p className="text-[11px] text-red-400 flex items-center gap-1">
+                <AlertCircle className="w-3 h-3" /> {error}
+              </p>
+            )}
           </motion.div>
         ) : (
           <motion.div key="upload" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}>

@@ -58,11 +58,42 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
     [images, onChange]
   );
 
-  const handleAddUrl = (e?: React.FormEvent) => {
+  const handleAddUrl = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!urlInput.trim()) return;
-    onChange([...images, urlInput.trim()]);
-    setUrlInput("");
+    const rawUrl = urlInput.trim();
+    if (!rawUrl) return;
+
+    // If it's already a Cloudinary URL, append directly
+    if (rawUrl.includes("res.cloudinary.com")) {
+      onChange([...images, rawUrl]);
+      setUrlInput("");
+      return;
+    }
+
+    setUploading(true);
+    setUploadProgress("Uploading URL to Cloudinary...");
+    setError("");
+    try {
+      const token = localStorage.getItem("admin_token") || "";
+      const res = await fetch("/api/admin/upload-url", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ url: rawUrl }),
+      });
+      const data = await res.json();
+      const finalUrl = res.ok && data.url ? data.url : rawUrl;
+      onChange([...images, finalUrl]);
+      setUrlInput("");
+    } catch {
+      onChange([...images, rawUrl]);
+      setUrlInput("");
+    } finally {
+      setUploading(false);
+      setUploadProgress("");
+    }
   };
 
   const handleRemove = (index: number) => {

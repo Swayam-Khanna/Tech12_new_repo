@@ -2,6 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import type { Request, Response, NextFunction } from "express";
 import { upload } from "../middlewares/upload";
+import { uploadToCloudinary, uploadUrlToCloudinary, isCloudinaryConfigured } from "../lib/cloudinary";
 import { uploadToNeonS3, getObjectFromS3, isS3Configured } from "../lib/neonS3";
 
 const SECRET = process.env["ADMIN_SECRET"] || "tt_secret_key_2024";
@@ -24,6 +25,10 @@ function requireAdmin(req: Request, res: Response, next: NextFunction) {
 
 const router = Router();
 
+/**
+ * Direct file upload (images, videos, documents)
+ * Automatically uploads to Cloudinary with S3 fallback.
+ */
 router.post("/admin/upload", requireAdmin, (req, res, next) => {
   upload.single("file")(req, res, async (err) => {
     if (err) {
@@ -41,6 +46,19 @@ router.post("/admin/upload", requireAdmin, (req, res, next) => {
       : "pdf";
 
     try {
+      if (isCloudinaryConfigured) {
+        const cRes = await uploadToCloudinary(file, "abvt_projects");
+        res.json({
+          url: cRes.secure_url || cRes.url,
+          filename: file.originalname,
+          originalName: file.originalname,
+          size: file.size,
+          type,
+          publicId: cRes.public_id,
+        });
+        return;
+      }
+
       if (isS3Configured) {
         const url = await uploadToNeonS3(file, "projects");
         res.json({
@@ -55,9 +73,39 @@ router.post("/admin/upload", requireAdmin, (req, res, next) => {
 
       res.status(500).json({ error: "Storage service not configured" });
     } catch (uploadErr: any) {
+      console.error("Upload error:", uploadErr);
       res.status(500).json({ error: uploadErr.message || "Failed to upload file to storage" });
     }
   });
+});
+
+/**
+ * URL upload route: Takes any external image/media URL,
+ * uploads it to Cloudinary, and returns the persistent Cloudinary URL.
+ */
+router.post("/admin/upload-url", requireAdmin, async (req, res) => {
+  const { url } = req.body as { url?: string };
+  if (!url || typeof url !== "string" || !url.trim()) {
+    res.status(400).json({ error: "URL is required" });
+    return;
+  }
+
+  try {
+    if (isCloudinaryConfigured) {
+      const cRes = await uploadUrlToCloudinary(url.trim(), "abvt_projects");
+      res.json({
+        url: cRes.secure_url || cRes.url,
+        publicId: cRes.public_id,
+      });
+      return;
+    }
+
+    // If Cloudinary is not configured, simply return original URL
+    res.json({ url: url.trim() });
+  } catch (err: any) {
+    console.error("Cloudinary URL upload error:", err);
+    res.status(500).json({ error: err.message || "Failed to upload URL to Cloudinary" });
+  }
 });
 
 router.get("/assets/{*key}", async (req, res) => {
