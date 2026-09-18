@@ -125,7 +125,7 @@ export default function PortfolioPage() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+                className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6 [column-fill:_balance]"
               >
                 {filtered.map((project: any, index: number) => (
                   <motion.div
@@ -136,35 +136,35 @@ export default function PortfolioPage() {
                     exit={{ opacity: 0, scale: 0.96 }}
                     transition={{ duration: 0.35, delay: index * 0.07 }}
                     onClick={() => navigate(`/portfolio/${project.id}`)}
-                    className="group cursor-pointer"
+                    className="group cursor-pointer break-inside-avoid inline-block w-full"
                   >
-                    <div className="rounded-3xl overflow-hidden glass-card border border-white/10 hover:border-primary/40 transition-all duration-300 flex flex-col h-full bg-[#0b0f19]">
-                      {/* Image */}
-                      <div className="relative overflow-hidden aspect-[16/11] sm:aspect-[4/3] w-full bg-black/40 flex items-center justify-center">
+                    <div className="rounded-3xl overflow-hidden glass-card border border-white/10 hover:border-primary/40 transition-all duration-300 flex flex-col h-auto bg-[#0b0f19]">
+                      {/* Image container auto-sized according to image dimensions without cropping */}
+                      <div className="relative overflow-hidden w-full bg-black/40 flex items-center justify-center">
                         <img
                           src={project.image}
                           alt={project.title}
-                          className="w-full h-full object-cover block opacity-85 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-700"
+                          className="w-full h-auto max-h-[580px] object-contain block opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700"
                           onError={(e) => {
                             e.currentTarget.style.display = 'none';
                           }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-transparent opacity-80" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-transparent opacity-60 pointer-events-none" />
                         {activeService && (
-                          <div className={`absolute inset-0 bg-gradient-to-br ${activeService.color} opacity-0 group-hover:opacity-15 transition-opacity duration-500`} />
+                          <div className={`absolute inset-0 bg-gradient-to-br ${activeService.color} opacity-0 group-hover:opacity-15 transition-opacity duration-500 pointer-events-none`} />
                         )}
-                        <div className="absolute top-4 left-4">
-                          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-black/60 backdrop-blur-md border border-white/20 text-white">
+                        <div className="absolute top-4 left-4 pointer-events-none">
+                          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-black/60 backdrop-blur-md border border-white/20 text-white shadow-sm">
                             {project.subCategory || project.category}
                           </span>
                         </div>
-                        <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 -rotate-45 group-hover:rotate-0 transition-all duration-500">
+                        <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 -rotate-45 group-hover:rotate-0 transition-all duration-500 shadow-sm">
                           <ArrowUpRight className="w-4 h-4 text-white" />
                         </div>
                       </div>
 
                       {/* Content */}
-                      <div className="p-6 flex flex-col flex-1 justify-between">
+                      <div className="p-6 flex flex-col justify-between">
                         <div>
                           <p className="text-accent text-xs font-semibold mb-1.5">{project.year || "2026"}</p>
                           <h2 className="text-xl font-display font-bold text-white mb-2 group-hover:text-primary transition-colors line-clamp-1">

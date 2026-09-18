@@ -40,26 +40,26 @@ export function Portfolio() {
             <Loader2 className="w-5 h-5 animate-spin mr-2" /> Loading projects...
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6 [column-fill:_balance]">
             {projects.map((project, index) => (
-              <FadeIn key={project.id} delay={0.1 * (index + 1)}>
+              <FadeIn key={project.id} delay={0.1 * (index + 1)} className="break-inside-avoid inline-block w-full">
                 <div
                   onClick={() => navigate(`/portfolio/${project.id}`)}
                   className="group relative rounded-3xl overflow-hidden glass-card cursor-pointer border border-white/10 hover:border-primary/40 transition-all duration-300 flex flex-col bg-[#0b0f19]"
                 >
-                  {/* Image container with fixed aspect ratio and auto-contain fit */}
-                  <div className="relative w-full aspect-[16/11] sm:aspect-[4/3] overflow-hidden bg-black/40 flex items-center justify-center">
+                  {/* Image container auto-sized according to image dimensions without cropping */}
+                  <div className="relative w-full overflow-hidden bg-black/40 flex items-center justify-center">
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                      className="w-full h-auto max-h-[580px] object-contain block transition-transform duration-700 group-hover:scale-[1.02] opacity-90 group-hover:opacity-100"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-transparent opacity-80" />
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-black/60 backdrop-blur-md border border-white/20 text-white">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-transparent opacity-60 pointer-events-none" />
+                    <div className="absolute top-4 left-4 pointer-events-none">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-black/60 backdrop-blur-md border border-white/20 text-white shadow-sm">
                         {project.subCategory || project.category}
                       </span>
                     </div>
