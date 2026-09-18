@@ -35,6 +35,14 @@ export async function uploadToCloudinary(
     : "auto";
 
   return new Promise((resolve, reject) => {
+    let finished = false;
+    const timeout = setTimeout(() => {
+      if (!finished) {
+        finished = true;
+        reject(new Error("Cloudinary upload timed out after 45 seconds. Check network or file size."));
+      }
+    }, 45000);
+
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         folder,
@@ -42,15 +50,27 @@ export async function uploadToCloudinary(
         resource_type: resourceType,
       },
       (error, result) => {
+        clearTimeout(timeout);
+        if (finished) return;
+        finished = true;
         if (error) {
+          console.error("Cloudinary stream error callback:", error);
           return reject(error);
         }
         if (!result) {
-          return reject(new Error("Cloudinary upload failed with empty result."));
+          return reject(new Error("Cloudinary upload returned empty result."));
         }
         resolve(result);
       }
     );
+
+    uploadStream.on("error", (err) => {
+      clearTimeout(timeout);
+      if (finished) return;
+      finished = true;
+      console.error("Cloudinary uploadStream error event:", err);
+      reject(err);
+    });
 
     const readable = new Readable();
     readable.push(file.buffer);

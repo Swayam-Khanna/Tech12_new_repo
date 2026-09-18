@@ -121,36 +121,79 @@ export function MediaUploader({ label, value, onChange, onDimensions, accept = "
   const uploadFile = useCallback(async (file: File) => {
     setError("");
     setUploading(true);
-    setProgress(0);
+    setProgress(5);
 
     const formData = new FormData();
     formData.append("file", file);
     const token = localStorage.getItem("admin_token") || "";
 
+    if (!token) {
+      setUploading(false);
+      setError("Admin session expired or missing token. Please log in again.");
+      return;
+    }
+
     return new Promise<void>((resolve) => {
       const xhr = new XMLHttpRequest();
       xhr.open("POST", "/api/admin/upload");
       xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+      xhr.timeout = 50000; // 50 seconds timeout
 
       xhr.upload.onprogress = (e) => {
-        if (e.lengthComputable) setProgress(Math.round((e.loaded / e.total) * 100));
+        if (e.lengthComputable && e.total > 0) {
+          // Cap browser-to-server progress at 85% so user knows server is processing & uploading to Cloudinary
+          const pct = Math.round((e.loaded / e.total) * 85);
+          setProgress(Math.max(5, Math.min(85, pct)));
+        }
       };
 
       xhr.onload = () => {
         setUploading(false);
         if (xhr.status === 200) {
-          const result: UploadResult = JSON.parse(xhr.responseText);
-          setUploaded(result);
-          onChange(result.url);
-          setProgress(100);
+          try {
+            const result: UploadResult = JSON.parse(xhr.responseText);
+            setUploaded(result);
+            onChange(result.url);
+            setProgress(100);
+          } catch (e) {
+            setError("Uploaded successfully, but received invalid response format.");
+          }
         } else {
-          try { setError(JSON.parse(xhr.responseText).error || "Upload failed"); }
-          catch { setError("Upload failed"); }
+          try {
+            const data = JSON.parse(xhr.responseText);
+            setError(data.error || `Upload failed with status code ${xhr.status}`);
+          } catch {
+            setError(xhr.statusText ? `Upload failed (${xhr.status}: ${xhr.statusText})` : "Upload failed on server.");
+          }
         }
         resolve();
       };
-      xhr.onerror = () => { setUploading(false); setError("Network error. Please try again."); resolve(); };
-      xhr.send(formData);
+
+      xhr.onerror = () => {
+        setUploading(false);
+        setError("Network connection error. Failed to reach the server.");
+        resolve();
+      };
+
+      xhr.ontimeout = () => {
+        setUploading(false);
+        setError("Upload timed out (took longer than 50s). Please check your internet connection or use Image URL tab.");
+        resolve();
+      };
+
+      xhr.onabort = () => {
+        setUploading(false);
+        setError("Upload was cancelled.");
+        resolve();
+      };
+
+      try {
+        xhr.send(formData);
+      } catch (err: any) {
+        setUploading(false);
+        setError(err?.message || "Failed to start upload.");
+        resolve();
+      }
     });
   }, [onChange]);
 
