@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useProjects } from "@/hooks/useProjects";
 import { servicesData } from "@/data/servicesData";
+import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
 
 const SERVICE_FILTERS = [
   { label: "All Work", value: "all", icon: "◈", color: "from-white/20 to-white/5" },
@@ -142,8 +143,10 @@ export default function PortfolioPage() {
                       {/* Image container auto-sized according to image dimensions without cropping */}
                       <div className="relative overflow-hidden w-full bg-black/40 flex items-center justify-center">
                         <img
-                          src={project.image}
+                          src={getOptimizedImageUrl(project.image, { width: 900 })}
                           alt={project.title}
+                          loading={index < 3 ? "eager" : "lazy"}
+                          decoding="async"
                           className="w-full h-auto max-h-[580px] object-contain block opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700"
                           onError={(e) => {
                             e.currentTarget.style.display = 'none';

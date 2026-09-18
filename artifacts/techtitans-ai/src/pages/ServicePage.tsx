@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { servicesData } from "@/data/servicesData";
 import { useProjects } from "@/hooks/useProjects";
+import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
 
 export default function ServicePage() {
   const params = useParams<{ id: string }>();
@@ -139,8 +140,10 @@ export default function ServicePage() {
                 >
                   <div className="relative overflow-hidden aspect-[16/10.5] w-full bg-gradient-to-br from-white/5 to-white/10">
                     <img
-                      src={project.image}
+                      src={getOptimizedImageUrl(project.image, { width: 700 })}
                       alt={project.title}
+                      loading={i < 3 ? "eager" : "lazy"}
+                      decoding="async"
                       className="w-full h-full object-cover block opacity-70 group-hover:opacity-95 group-hover:scale-[1.03] transition-all duration-500"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';

@@ -2,6 +2,7 @@ import { useLocation } from "wouter";
 import { FadeIn } from "./ui/fade-in";
 import { ArrowUpRight, Loader2 } from "lucide-react";
 import { useProjects } from "@/hooks/useProjects";
+import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
 
 export function Portfolio() {
   const [, navigate] = useLocation();
@@ -50,8 +51,10 @@ export function Portfolio() {
                   {/* Image container auto-sized according to image dimensions without cropping */}
                   <div className="relative w-full overflow-hidden bg-black/40 flex items-center justify-center">
                     <img
-                      src={project.image}
+                      src={getOptimizedImageUrl(project.image, { width: 900 })}
                       alt={project.title}
+                      loading={index < 2 ? "eager" : "lazy"}
+                      decoding="async"
                       className="w-full h-auto max-h-[580px] object-contain block transition-transform duration-700 group-hover:scale-[1.02] opacity-90 group-hover:opacity-100"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';

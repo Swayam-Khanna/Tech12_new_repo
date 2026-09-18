@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { servicesData } from "@/data/servicesData";
 import { useProjects } from "@/hooks/useProjects";
+import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
 
 export default function SubServicePage() {
   const params = useParams<{ serviceId: string; subServiceId: string }>();
@@ -117,8 +118,10 @@ export default function SubServicePage() {
                     <div className="glass-card rounded-3xl overflow-hidden border border-white/10 hover:border-primary/40 transition-all duration-300 flex flex-col h-auto bg-[#0b0f19]">
                       <div className="relative overflow-hidden w-full bg-black/40 flex items-center justify-center">
                         <img
-                          src={project.image}
+                          src={getOptimizedImageUrl(project.image, { width: 900 })}
                           alt={project.title}
+                          loading={index < 3 ? "eager" : "lazy"}
+                          decoding="async"
                           className="w-full h-auto max-h-[580px] object-contain block opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700"
                           onError={(e) => {
                             e.currentTarget.style.display = 'none';

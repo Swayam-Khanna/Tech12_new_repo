@@ -11,6 +11,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useProjects, useProject } from "@/hooks/useProjects";
 import { servicesData } from "@/data/servicesData";
+import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
 
 /* ─── Lightbox ───────────────────────────────────────────────── */
 function Lightbox({
@@ -147,7 +148,13 @@ function ImageGallery({ images, title }: { images: string[]; title: string }) {
             onClick={() => open(0)}
             className="group relative cursor-zoom-in rounded-2xl md:rounded-3xl overflow-hidden glass-card max-h-[75vh] flex items-center justify-center bg-black/40"
           >
-            <img src={images[0]} alt={title} className="max-h-[75vh] w-auto max-w-full object-contain block group-hover:scale-[1.01] transition-transform duration-700" />
+            <img
+              src={getOptimizedImageUrl(images[0], { width: 1400 })}
+              alt={title}
+              loading="eager"
+              decoding="async"
+              className="max-h-[75vh] w-auto max-w-full object-contain block group-hover:scale-[1.01] transition-transform duration-700"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border border-white/20">
               <ZoomIn className="w-4 h-4 text-white" />
@@ -157,7 +164,13 @@ function ImageGallery({ images, title }: { images: string[]; title: string }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
             {images.map((src, i) => (
               <div key={i} onClick={() => open(i)} className="group relative cursor-zoom-in rounded-2xl overflow-hidden glass-card max-h-[60vh] flex items-center justify-center bg-black/40">
-                <img src={src} alt={`${title} ${i + 1}`} className="max-h-[60vh] w-auto max-w-full object-contain block group-hover:scale-[1.01] transition-transform duration-700" />
+                <img
+                  src={getOptimizedImageUrl(src, { width: 1000 })}
+                  alt={`${title} ${i + 1}`}
+                  loading="eager"
+                  decoding="async"
+                  className="max-h-[60vh] w-auto max-w-full object-contain block group-hover:scale-[1.01] transition-transform duration-700"
+                />
                 <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                   <ZoomIn className="w-6 h-6 text-white" />
                 </div>
@@ -169,7 +182,13 @@ function ImageGallery({ images, title }: { images: string[]; title: string }) {
           <div className="space-y-3 md:space-y-4">
             {/* Main image */}
             <div onClick={() => open(0)} className="group relative cursor-zoom-in rounded-2xl md:rounded-3xl overflow-hidden glass-card max-h-[70vh] flex items-center justify-center bg-black/40">
-              <img src={images[0]} alt={title} className="max-h-[70vh] w-auto max-w-full object-contain block group-hover:scale-[1.01] transition-transform duration-700" />
+              <img
+                src={getOptimizedImageUrl(images[0], { width: 1400 })}
+                alt={title}
+                loading="eager"
+                decoding="async"
+                className="max-h-[70vh] w-auto max-w-full object-contain block group-hover:scale-[1.01] transition-transform duration-700"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border border-white/20">
                 <ZoomIn className="w-4 h-4 text-white" />
@@ -187,7 +206,13 @@ function ImageGallery({ images, title }: { images: string[]; title: string }) {
                     onClick={() => open(i + 1)}
                     className="group relative cursor-zoom-in rounded-xl md:rounded-2xl overflow-hidden glass-card max-h-[350px] min-h-[160px] flex items-center justify-center bg-black/40"
                   >
-                    <img src={src} alt={`${title} ${i + 2}`} className="max-h-[350px] w-auto max-w-full object-contain block group-hover:scale-[1.02] transition-transform duration-500" />
+                    <img
+                      src={getOptimizedImageUrl(src, { width: 700 })}
+                      alt={`${title} ${i + 2}`}
+                      loading="lazy"
+                      decoding="async"
+                      className="max-h-[350px] w-auto max-w-full object-contain block group-hover:scale-[1.02] transition-transform duration-500"
+                    />
                     {isLast && remaining > 0 ? (
                       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center pointer-events-none">
                         <div className="text-center">
@@ -506,8 +531,10 @@ export default function CaseStudy() {
                     className="relative block w-full bg-black/60 overflow-hidden cursor-pointer group/link"
                   >
                     <img
-                      src={displayImage}
+                      src={getOptimizedImageUrl(displayImage, { width: 1400 })}
                       alt={project.title}
+                      loading="eager"
+                      decoding="async"
                       className="w-full h-auto max-h-[78vh] object-contain mx-auto block group-hover/link:scale-[1.015] transition-transform duration-500"
                     />
                     {/* Hover Overlay */}
@@ -523,8 +550,10 @@ export default function CaseStudy() {
                 ) : (
                   <div className="relative block w-full bg-black/60 overflow-hidden">
                     <img
-                      src={displayImage}
+                      src={getOptimizedImageUrl(displayImage, { width: 1400 })}
                       alt={project.title}
+                      loading="eager"
+                      decoding="async"
                       className="w-full h-auto max-h-[78vh] object-contain mx-auto block"
                     />
                   </div>
