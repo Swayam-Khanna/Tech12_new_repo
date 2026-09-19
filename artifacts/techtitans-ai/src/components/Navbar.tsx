@@ -34,8 +34,8 @@ export function Navbar() {
         <a href="#" className="flex items-center group relative z-50 transition-transform duration-300 hover:scale-105 active:scale-95">
           <img
             src="/abvt-navbar-logo.png"
-            alt="AVBT Technology"
-            className="h-10 md:h-11 w-auto object-contain drop-shadow-[0_2px_12px_rgba(59,130,246,0.25)]"
+            alt="AVBT Technologies"
+            className="h-9 md:h-10 w-auto max-w-[200px] object-contain drop-shadow-[0_2px_12px_rgba(59,130,246,0.3)]"
           />
         </a>
 

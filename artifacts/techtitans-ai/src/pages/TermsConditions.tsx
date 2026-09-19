@@ -1,4 +1,4 @@
-import { useLocation } from "wouter";
+﻿import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
@@ -7,18 +7,18 @@ import { Footer } from "@/components/Footer";
 const sections = [
   {
     title: "1. Acceptance of Terms",
-    content: `By accessing or using the AVBT Technology website or engaging our services, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must not use our website or services.
+    content: `By accessing or using the AVBT Technologies website or engaging our services, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must not use our website or services.
 
 These Terms apply to all visitors, clients, and others who access or use our services. We reserve the right to update these Terms at any time without prior notice. Continued use of our services after any changes constitutes your acceptance of the revised Terms.`,
   },
   {
     title: "2. Services Offered",
-    content: `AVBT Technology provides professional digital services including but not limited to:
+    content: `AVBT Technologies provides professional digital services including but not limited to:
 
-• **Branding & Identity Design** — Logo creation, visual identity systems, brand guidelines, and packaging design.
-• **Web Development** — Custom websites, web applications, e-commerce stores, and landing pages.
-• **Graphic Design** — Social media graphics, marketing materials, infographics, and print design.
-• **Video Editing & Motion Graphics** — Content creation, brand films, explainer videos, reels, and YouTube content.
+â€¢ **Branding & Identity Design** â€” Logo creation, visual identity systems, brand guidelines, and packaging design.
+â€¢ **Web Development** â€” Custom websites, web applications, e-commerce stores, and landing pages.
+â€¢ **Graphic Design** â€” Social media graphics, marketing materials, infographics, and print design.
+â€¢ **Video Editing & Motion Graphics** â€” Content creation, brand films, explainer videos, reels, and YouTube content.
 
 The specific scope, deliverables, timelines, and pricing for each project are defined in a separate Project Agreement or proposal document signed by both parties.`,
   },
@@ -36,10 +36,10 @@ The specific scope, deliverables, timelines, and pricing for each project are de
     title: "4. Client Responsibilities",
     content: `To ensure smooth project delivery, the client agrees to:
 
-• Provide all necessary materials, content, assets, and feedback in a timely manner.
-• Designate a single point of contact for project communication.
-• Review and provide feedback on deliverables within the agreed review window (typically 5 business days).
-• Ensure that any materials provided to AVBT Technology do not infringe upon third-party intellectual property rights.
+â€¢ Provide all necessary materials, content, assets, and feedback in a timely manner.
+â€¢ Designate a single point of contact for project communication.
+â€¢ Review and provide feedback on deliverables within the agreed review window (typically 5 business days).
+â€¢ Ensure that any materials provided to AVBT Technologies do not infringe upon third-party intellectual property rights.
 
 Delays caused by the client (e.g., late content delivery, delayed feedback) may result in adjusted project timelines and/or additional costs.`,
   },
@@ -47,11 +47,11 @@ Delays caused by the client (e.g., late content delivery, delayed feedback) may 
     title: "5. Intellectual Property",
     content: `5.1 **Client Ownership:** Upon receipt of full payment, all final deliverables and creative assets become the property of the client.
 
-5.2 **Portfolio Rights:** AVBT Technology retains the right to display completed work in our portfolio, website, social media, and marketing materials unless the client explicitly requests confidentiality in writing.
+5.2 **Portfolio Rights:** AVBT Technologies retains the right to display completed work in our portfolio, website, social media, and marketing materials unless the client explicitly requests confidentiality in writing.
 
-5.3 **Pre-Payment Ownership:** All work-in-progress materials remain the intellectual property of AVBT Technology until full payment has been received.
+5.3 **Pre-Payment Ownership:** All work-in-progress materials remain the intellectual property of AVBT Technologies until full payment has been received.
 
-5.4 **Third-Party Assets:** Any stock images, fonts, icons, or software licensed for use in a project are subject to their respective licensing agreements. AVBT Technology will inform the client of any third-party licensing requirements.`,
+5.4 **Third-Party Assets:** Any stock images, fonts, icons, or software licensed for use in a project are subject to their respective licensing agreements. AVBT Technologies will inform the client of any third-party licensing requirements.`,
   },
   {
     title: "6. Revisions & Scope Changes",
@@ -61,17 +61,17 @@ Scope changes that significantly alter the project direction, add features, or e
   },
   {
     title: "7. Confidentiality",
-    content: `Both parties agree to keep all project-related information, business strategies, and proprietary data confidential. AVBT Technology will not share your project details, business information, or any materials you provide with any third party without your explicit written consent — except as required to deliver the agreed services (e.g., sharing assets with a printing vendor).`,
+    content: `Both parties agree to keep all project-related information, business strategies, and proprietary data confidential. AVBT Technologies will not share your project details, business information, or any materials you provide with any third party without your explicit written consent â€” except as required to deliver the agreed services (e.g., sharing assets with a printing vendor).`,
   },
   {
     title: "8. Limitation of Liability",
-    content: `AVBT Technology shall not be liable for any indirect, incidental, consequential, or punitive damages arising from the use of our services or deliverables. Our total liability for any claim arising under these Terms shall not exceed the total fees paid by the client for the specific project in question.
+    content: `AVBT Technologies shall not be liable for any indirect, incidental, consequential, or punitive damages arising from the use of our services or deliverables. Our total liability for any claim arising under these Terms shall not exceed the total fees paid by the client for the specific project in question.
 
 We are not responsible for any losses arising from client-provided content that infringes third-party rights, technical failures beyond our control, or client decisions made based on our creative work.`,
   },
   {
     title: "9. Warranties & Disclaimers",
-    content: `AVBT Technology warrants that all work is created with professional skill and care. However, we do not guarantee specific business outcomes, search engine rankings, or conversion rates from any design, development, or marketing work.
+    content: `AVBT Technologies warrants that all work is created with professional skill and care. However, we do not guarantee specific business outcomes, search engine rankings, or conversion rates from any design, development, or marketing work.
 
 The website and its content are provided "as is." We make no warranties, express or implied, regarding the accuracy or completeness of information on our website.`,
   },
@@ -79,11 +79,11 @@ The website and its content are provided "as is." We make no warranties, express
     title: "10. Termination",
     content: `Either party may terminate a project with 14 days' written notice. Upon termination:
 
-• The client must pay for all work completed up to the termination date.
-• AVBT Technology will deliver all completed work-in-progress upon receipt of final payment.
-• Deposits are non-refundable.
+â€¢ The client must pay for all work completed up to the termination date.
+â€¢ AVBT Technologies will deliver all completed work-in-progress upon receipt of final payment.
+â€¢ Deposits are non-refundable.
 
-AVBT Technology reserves the right to refuse or terminate services at any time if a client engages in abusive, unethical, or unlawful behavior.`,
+AVBT Technologies reserves the right to refuse or terminate services at any time if a client engages in abusive, unethical, or unlawful behavior.`,
   },
   {
     title: "11. Governing Law",
@@ -93,7 +93,7 @@ AVBT Technology reserves the right to refuse or terminate services at any time i
     title: "12. Contact Us",
     content: `If you have any questions about these Terms and Conditions, please contact us:
 
-**AVBT Technology**
+**AVBT Technologies**
 #134/19, Ground Floor, AVBT Building, ITI Road, Solan (H.P.) 173212
 Email: techtitansai@zohomail.in
 Phone: 8979768681 | 7876799926 | 86270 79550`,
@@ -125,7 +125,7 @@ export default function TermsConditions() {
             Last Revised: <span className="text-white">March 2025</span>
           </p>
           <p className="text-foreground-muted mt-4 leading-relaxed">
-            Please read these Terms and Conditions carefully before using AVBT Technology's website or engaging
+            Please read these Terms and Conditions carefully before using AVBT Technologies' website or engaging
             our services. These terms outline the rules and regulations for the use of our services and website.
           </p>
         </motion.div>

@@ -239,7 +239,7 @@ export default function ProjectForm() {
               <h1 className="text-sm font-display font-bold text-white">
                 {isEdit ? "Edit Project" : "Add New Project"}
               </h1>
-              <p className="text-foreground-muted text-xs">AVBT Technology</p>
+              <p className="text-foreground-muted text-xs">AVBT Technologies</p>
             </div>
           </div>
         </div>

@@ -73,7 +73,7 @@ export function AIChatHelper() {
         {
           id: "welcome",
           sender: "bot",
-          text: "Hi! I'm your guide at AVBT Technology. 🚀 What are we building today?",
+          text: "Hi! I'm your guide at AVBT Technologies. 🚀 What are we building today?",
           options: ["Web Development", "Video & Design", "General Inquiry"],
         },
       ]);
@@ -191,7 +191,7 @@ export function AIChatHelper() {
         {
           id: Math.random().toString(),
           sender: "bot",
-          text: "That sounds like a fascinating project! Our engineering and creative team at AVBT Technology is ready to bring it to life. Let's get in touch!",
+          text: "That sounds like a fascinating project! Our engineering and creative team at AVBT Technologies is ready to bring it to life. Let's get in touch!",
           options: ["Contact Team ➔", "Start Over"],
         },
       ]);

@@ -36,7 +36,7 @@ router.post("/contact", async (req, res) => {
   const subjectService = subService ? `${service} (${subService})` : service;
 
   const mailOptions = {
-    from: `"AVBT Technology Contact" <${emailUser}>`,
+    from: `"AVBT Technologies Contact" <${emailUser}>`,
     to: contactReceiver,
     replyTo: email,
     subject: `New Inquiry: ${subjectService} — from ${name}`,
@@ -68,7 +68,7 @@ router.post("/contact", async (req, res) => {
           </tr>
         </table>
         <hr style="border-color: rgba(255,255,255,0.1); margin-top: 24px;" />
-        <p style="color: #6B7280; font-size: 12px; margin-bottom: 0;">Sent from AVBT Technology website contact form</p>
+        <p style="color: #6B7280; font-size: 12px; margin-bottom: 0;">Sent from AVBT Technologies website contact form</p>
       </div>
     `,
   };

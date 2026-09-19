@@ -8,7 +8,7 @@ const team = [
   {
     name: "Aryan Sharma",
     role: "Founder & Creative Director",
-    bio: "Visionary behind AVBT Technology. Leads brand strategy and creative direction for all client projects.",
+    bio: "Visionary behind AVBT Technologies. Leads brand strategy and creative direction for all client projects.",
     initials: "AS",
     color: "from-blue-500 to-cyan-500",
   },
@@ -97,7 +97,7 @@ export default function AboutUs() {
             <span className="text-gradient">Behind Your Brand.</span>
           </h1>
           <p className="text-foreground-muted text-lg md:text-xl max-w-3xl leading-relaxed">
-            AVBT Technology is a premium digital agency based in Solan, Himachal Pradesh. Founded with one mission —
+            AVBT Technologies is a premium digital agency based in Solan, Himachal Pradesh. Founded with one mission —
             to help ambitious brands look world-class and grow faster through intelligent design, cutting-edge
             development, and powerful storytelling.
           </p>
@@ -138,7 +138,7 @@ export default function AboutUs() {
             </h2>
             <div className="space-y-5 text-foreground-muted leading-relaxed">
               <p>
-                AVBT Technology was born out of a simple frustration — too many great businesses were being held back
+                AVBT Technologies was born out of a simple frustration — too many great businesses were being held back
                 by poor digital presence. We saw startups with amazing products losing to competitors simply because
                 of weaker branding, slower websites, and no content strategy.
               </p>
