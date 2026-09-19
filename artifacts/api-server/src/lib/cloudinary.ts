@@ -93,4 +93,24 @@ export async function uploadUrlToCloudinary(
   });
 }
 
+export function generateCloudinarySignature(paramsToSign: Record<string, any>) {
+  if (!isCloudinaryConfigured) {
+    throw new Error("Cloudinary credentials are not configured.");
+  }
+  const timestamp = Math.round(Date.now() / 1000);
+  const params: Record<string, any> = {
+    ...paramsToSign,
+    timestamp,
+  };
+
+  const signature = cloudinary.utils.api_sign_request(params, apiSecret);
+
+  return {
+    signature,
+    timestamp,
+    apiKey,
+    cloudName,
+  };
+}
+
 export { cloudinary };

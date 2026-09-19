@@ -2,7 +2,12 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import type { Request, Response, NextFunction } from "express";
 import { upload } from "../middlewares/upload";
-import { uploadToCloudinary, uploadUrlToCloudinary, isCloudinaryConfigured } from "../lib/cloudinary";
+import {
+  uploadToCloudinary,
+  uploadUrlToCloudinary,
+  generateCloudinarySignature,
+  isCloudinaryConfigured
+} from "../lib/cloudinary";
 import { uploadToNeonS3, getObjectFromS3, isS3Configured } from "../lib/neonS3";
 
 const SECRET = process.env["ADMIN_SECRET"] || "tt_secret_key_2024";
@@ -105,6 +110,23 @@ router.post("/admin/upload-url", requireAdmin, async (req, res) => {
   } catch (err: any) {
     console.error("Cloudinary URL upload error:", err);
     res.status(500).json({ error: err.message || "Failed to upload URL to Cloudinary" });
+  }
+});
+
+/**
+ * Direct browser-to-Cloudinary upload signature endpoint.
+ * Bypasses reverse-proxy/Coolify payload limits and buffer timeouts,
+ * uploading directly to Cloudinary CDN in 2-5 seconds.
+ */
+router.post("/admin/upload-signature", requireAdmin, async (req, res) => {
+  try {
+    const folder = (req.body?.folder as string) || "abvt_projects";
+    const timestamp = Math.round(Date.now() / 1000);
+    const signData = generateCloudinarySignature({ folder, timestamp });
+    res.json(signData);
+  } catch (err: any) {
+    console.error("Cloudinary signature generation error:", err);
+    res.status(500).json({ error: err.message || "Failed to generate upload signature" });
   }
 });
 

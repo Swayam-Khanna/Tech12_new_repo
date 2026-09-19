@@ -123,25 +123,107 @@ export function MediaUploader({ label, value, onChange, onDimensions, accept = "
     setUploading(true);
     setProgress(5);
 
-    const formData = new FormData();
-    formData.append("file", file);
     const token = localStorage.getItem("admin_token") || "";
-
     if (!token) {
       setUploading(false);
       setError("Admin session expired or missing token. Please log in again.");
       return;
     }
 
+    const type = file.type.startsWith("image/") ? "image" : file.type.startsWith("video/") ? "video" : "pdf";
+
+    // ── Strategy 1: Direct signed upload to Cloudinary (Bypasses Coolify proxy/limits, completes in 2-5 sec) ──
+    try {
+      const sigRes = await fetch("/api/admin/upload-signature", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ folder: "abvt_projects" }),
+      });
+
+      if (sigRes.ok) {
+        const sigData = await sigRes.json();
+        const { signature, timestamp, apiKey, cloudName } = sigData;
+
+        if (signature && apiKey && cloudName) {
+          const resourceType = file.type.startsWith("video/") ? "video" : file.type.startsWith("image/") ? "image" : "auto";
+          const directFormData = new FormData();
+          directFormData.append("file", file);
+          directFormData.append("api_key", apiKey);
+          directFormData.append("timestamp", String(timestamp));
+          directFormData.append("signature", signature);
+          directFormData.append("folder", "abvt_projects");
+
+          const directSuccess = await new Promise<boolean>((resolveDirect) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`);
+            xhr.timeout = 25000; // 25s timeout for direct upload
+
+            xhr.upload.onprogress = (e) => {
+              if (e.lengthComputable && e.total > 0) {
+                const pct = Math.round((e.loaded / e.total) * 100);
+                setProgress(Math.max(10, Math.min(99, pct)));
+              }
+            };
+
+            xhr.onload = () => {
+              if (xhr.status >= 200 && xhr.status < 300) {
+                try {
+                  const res = JSON.parse(xhr.responseText);
+                  const finalUrl = res.secure_url || res.url;
+                  setUploaded({
+                    url: finalUrl,
+                    filename: file.name,
+                    originalName: file.name,
+                    size: file.size,
+                    type: type as any,
+                  });
+                  onChange(finalUrl);
+                  setProgress(100);
+                  setUploading(false);
+                  resolveDirect(true);
+                  return;
+                } catch {
+                  resolveDirect(false);
+                }
+              } else {
+                resolveDirect(false);
+              }
+            };
+
+            xhr.onerror = () => resolveDirect(false);
+            xhr.ontimeout = () => resolveDirect(false);
+
+            try {
+              xhr.send(directFormData);
+            } catch {
+              resolveDirect(false);
+            }
+          });
+
+          if (directSuccess) {
+            return;
+          }
+        }
+      }
+    } catch {
+      // Fall through to Strategy 2 (backend proxy upload)
+    }
+
+    // ── Strategy 2: Server API Upload Fallback ──
+    const formData = new FormData();
+    formData.append("file", file);
+
     return new Promise<void>((resolve) => {
       const xhr = new XMLHttpRequest();
       xhr.open("POST", "/api/admin/upload");
       xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-      xhr.timeout = 50000; // 50 seconds timeout
+      xhr.timeout = 50000;
 
       xhr.upload.onprogress = (e) => {
         if (e.lengthComputable && e.total > 0) {
-          // Cap browser-to-server progress at 85% so user knows server is processing & uploading to Cloudinary
           const pct = Math.round((e.loaded / e.total) * 85);
           setProgress(Math.max(5, Math.min(85, pct)));
         }
@@ -155,7 +237,7 @@ export function MediaUploader({ label, value, onChange, onDimensions, accept = "
             setUploaded(result);
             onChange(result.url);
             setProgress(100);
-          } catch (e) {
+          } catch {
             setError("Uploaded successfully, but received invalid response format.");
           }
         } else {
@@ -171,13 +253,13 @@ export function MediaUploader({ label, value, onChange, onDimensions, accept = "
 
       xhr.onerror = () => {
         setUploading(false);
-        setError("Network connection error. Failed to reach the server.");
+        setError("Network connection error. Please check your connection or use Image URL tab.");
         resolve();
       };
 
       xhr.ontimeout = () => {
         setUploading(false);
-        setError("Upload timed out (took longer than 50s). Please check your internet connection or use Image URL tab.");
+        setError("Upload timed out. Server or proxy took too long. Please try again or use Image URL tab.");
         resolve();
       };
 

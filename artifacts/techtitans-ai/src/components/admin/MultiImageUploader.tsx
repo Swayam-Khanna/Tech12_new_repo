@@ -16,9 +16,52 @@ export function MultiImageUploader({ images, onChange }: MultiImageUploaderProps
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const uploadSingleFile = async (file: File): Promise<string> => {
+    const token = localStorage.getItem("admin_token") || "";
+
+    // ── Strategy 1: Direct signed Cloudinary upload (2-5s bypass) ──
+    try {
+      const sigRes = await fetch("/api/admin/upload-signature", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ folder: "abvt_projects" }),
+      });
+
+      if (sigRes.ok) {
+        const sigData = await sigRes.json();
+        const { signature, timestamp, apiKey, cloudName } = sigData;
+        if (signature && apiKey && cloudName) {
+          const directFormData = new FormData();
+          directFormData.append("file", file);
+          directFormData.append("api_key", apiKey);
+          directFormData.append("timestamp", String(timestamp));
+          directFormData.append("signature", signature);
+          directFormData.append("folder", "abvt_projects");
+
+          const cRes = await fetch(
+            `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
+            {
+              method: "POST",
+              body: directFormData,
+            }
+          );
+          if (cRes.ok) {
+            const data = await cRes.json();
+            if (data.secure_url || data.url) {
+              return data.secure_url || data.url;
+            }
+          }
+        }
+      }
+    } catch {
+      // Fall through to server API
+    }
+
+    // ── Strategy 2: Server API Upload ──
     const formData = new FormData();
     formData.append("file", file);
-    const token = localStorage.getItem("admin_token") || "";
 
     const res = await fetch("/api/admin/upload", {
       method: "POST",
