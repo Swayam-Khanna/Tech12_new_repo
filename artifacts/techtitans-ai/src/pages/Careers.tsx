@@ -196,12 +196,20 @@ export default function Careers() {
       formData.append("coverNote", coverNote);
       formData.append("resume", resumeFile);
 
-      const response = await fetch("/api/careers/apply", {
+      const apiEndpoint = `${import.meta.env.BASE_URL}api/careers/apply`.replace(/\/+/g, "/").replace(/^\//, "/");
+      const response = await fetch(apiEndpoint, {
         method: "POST",
         body: formData,
       });
 
-      const data = await response.json();
+      let data: any = {};
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        throw new Error(text || `Server returned status ${response.status}`);
+      }
 
       if (response.ok && data.success) {
         setSubmitted(true);
@@ -210,7 +218,7 @@ export default function Careers() {
           description: "We have received your application and resume. Our recruitment team will review it soon.",
         });
       } else {
-        throw new Error(data.message || "Failed to submit application");
+        throw new Error(data.error || data.message || "Failed to submit application");
       }
     } catch (err: any) {
       toast({
