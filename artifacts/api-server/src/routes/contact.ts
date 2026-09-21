@@ -15,7 +15,7 @@ router.post("/contact", async (req, res) => {
   const emailPass = process.env.EMAIL_PASS;
   const emailHost = process.env.EMAIL_HOST || "smtp.zoho.in";
   const emailPort = Number(process.env.EMAIL_PORT) || 465;
-  const contactReceiver = process.env.CONTACT_RECEIVER || emailUser;
+  const contactReceiver = process.env.CONTACT_RECEIVER || "techavbt@gmail.com";
 
   if (!emailUser || !emailPass) {
     req.log.error("Email credentials (EMAIL_USER or EMAIL_PASS) are not set");

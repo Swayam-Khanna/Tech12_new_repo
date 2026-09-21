@@ -1,4 +1,4 @@
-import { Linkedin, Github, Instagram, Twitter, Phone, Mail } from "lucide-react";
+import { Linkedin, Github, Phone, Mail } from "lucide-react";
 
 export function Footer() {
   return (
@@ -12,7 +12,6 @@ export function Footer() {
                 <img src="/logo.png" alt="AVBT Technologies" className="h-full w-auto object-contain drop-shadow-[0_2px_10px_rgba(59,130,246,0.3)]" />
               </div>
             </a>
-            <h3 className="font-display text-white text-xl font-bold mb-1">AVBT Technologies</h3>
             <p className="text-xs text-neutral-500 mb-4 font-sans">Empowering Digital Realities</p>
             <div className="flex items-center gap-2.5">
               <a
@@ -32,22 +31,6 @@ export function Footer() {
                 aria-label="GitHub"
               >
                 <Github className="w-4 h-4" />
-              </a>
-              <a
-                href="https://www.instagram.com/techtitans.ai?utm_source=qr&igsh=MWxkanNyY2Y3NWZmeQ=="
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:border-white/30 hover:bg-white/5 transition-all duration-300"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a
-                href="#"
-                className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:border-white/30 hover:bg-white/5 transition-all duration-300"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-4 h-4" />
               </a>
             </div>
           </div>
@@ -86,8 +69,8 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 text-sm">
                 <Mail className="w-4 h-4 text-neutral-400 flex-shrink-0" />
-                <a href="mailto:techtitansai@zohomail.in" className="hover:text-white transition-colors break-all">
-                  techtitansai@zohomail.in
+                <a href="mailto:contact@avbt.in" className="hover:text-white transition-colors break-all">
+                  contact@avbt.in
                 </a>
               </li>
             </ul>
@@ -97,10 +80,6 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
           <p>© 2026 AVBT Technologies. All rights reserved.</p>
-          <div className="flex items-center gap-2">
-            <span>Powered By AVBT Technologies</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-          </div>
         </div>
       </div>
     </footer>

@@ -1,4 +1,4 @@
-﻿import { useLocation } from "wouter";
+import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
@@ -94,7 +94,7 @@ To exercise any of these rights, please contact us at info@abvttechnology.com.`,
 
 **AVBT Technologies**
 #134/19, Ground Floor, AVBT Building, ITI Road, Solan (H.P.) 173212
-Email: techtitansai@zohomail.in
+Email: contact@avbt.in
 Phone: 8979768681 | 7876799926 | 86270 79550`,
   },
 ];
