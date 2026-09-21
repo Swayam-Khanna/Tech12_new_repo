@@ -14,6 +14,7 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsConditions from "@/pages/TermsConditions";
 import ServicePage from "@/pages/ServicePage";
 import SubServicePage from "@/pages/SubServicePage";
+import Careers from "@/pages/Careers";
 import AdminLogin from "@/pages/admin/AdminLogin";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import ProjectForm from "@/pages/admin/ProjectForm";
@@ -59,6 +60,7 @@ function AppRoutes() {
         <Route path="/portfolio" component={PortfolioPage} />
         <Route path="/portfolio/:id" component={CaseStudy} />
         <Route path="/about" component={AboutUs} />
+        <Route path="/careers" component={Careers} />
         <Route path="/privacy-policy" component={PrivacyPolicy} />
         <Route path="/terms-conditions" component={TermsConditions} />
         <Route path="/services/:id" component={ServicePage} />
