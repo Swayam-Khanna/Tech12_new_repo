@@ -23,15 +23,26 @@ router.post("/contact", async (req, res) => {
     return;
   }
 
-  const transporter = nodemailer.createTransport({
-    host: emailHost,
-    port: emailPort,
-    secure: emailPort === 465,
-    auth: {
-      user: emailUser,
-      pass: emailPass,
-    },
-  });
+  const isGmail = emailHost.includes("gmail") || emailUser.endsWith("@gmail.com");
+  const transporter = nodemailer.createTransport(
+    isGmail
+      ? {
+          service: "gmail",
+          auth: {
+            user: emailUser,
+            pass: emailPass,
+          },
+        }
+      : {
+          host: emailHost,
+          port: emailPort,
+          secure: emailPort === 465,
+          auth: {
+            user: emailUser,
+            pass: emailPass,
+          },
+        }
+  );
 
   const subjectService = subService ? `${service} (${subService})` : service;
 

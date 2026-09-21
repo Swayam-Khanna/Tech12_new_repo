@@ -1,4 +1,4 @@
-﻿import { Router, type IRouter } from "express";
+import { Router, type IRouter } from "express";
 import nodemailer from "nodemailer";
 import { upload } from "../middlewares/upload";
 
@@ -30,15 +30,26 @@ router.post("/careers/apply", (req, res, next) => {
       return;
     }
 
-    const transporter = nodemailer.createTransport({
-      host: emailHost,
-      port: emailPort,
-      secure: emailPort === 465,
-      auth: {
-        user: emailUser,
-        pass: emailPass,
-      },
-    });
+    const isGmail = emailHost.includes("gmail") || emailUser.endsWith("@gmail.com");
+    const transporter = nodemailer.createTransport(
+      isGmail
+        ? {
+            service: "gmail",
+            auth: {
+              user: emailUser,
+              pass: emailPass,
+            },
+          }
+        : {
+            host: emailHost,
+            port: emailPort,
+            secure: emailPort === 465,
+            auth: {
+              user: emailUser,
+              pass: emailPass,
+            },
+          }
+    );
 
     const attachments: Array<{ filename: string; content: Buffer; contentType?: string }> = [];
     if (req.file) {
