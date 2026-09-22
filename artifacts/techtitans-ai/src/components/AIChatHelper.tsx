@@ -73,8 +73,8 @@ export function AIChatHelper() {
         {
           id: "welcome",
           sender: "bot",
-          text: "Hi! I'm your guide at AVBT Technologies. 🚀 What are we building today?",
-          options: ["Web Development", "Video & Design", "General Inquiry"],
+          text: "Hi! I'm AVBT's AI assistant. I can help you understand our services, starting prices, process and project requirements.",
+          options: ["Website", "Branding", "Video", "AI Automation", "Pricing", "Get a Quote"],
         },
       ]);
     }
@@ -101,59 +101,53 @@ export function AIChatHelper() {
       let replyOptions: string[] = [];
 
       switch (option) {
-        case "Web Development":
-          replyText = "Awesome! We build high-performance React, Next.js, and custom web applications. What kind of project are you planning?";
-          replyOptions = ["Landing Page / Startup", "E-Commerce Site", "Custom App / Portal", "Go Back"];
+        case "Website":
+        case "Website / App Development":
+          replyText = "We build responsive websites, e-commerce stores, dashboards and custom web applications. Projects range from ₹8,000+ for landing pages up to ₹50,000+ for custom web apps.";
+          replyOptions = ["Pricing", "Get a Quote", "Start Over"];
           break;
-        case "Video & Design":
-          replyText = "Great! Our design team creates eye-catching brand assets and cinematic video edits. What do you need?";
-          replyOptions = ["Video Editing / Reels", "Brand Identity / Logo", "Go Back"];
+        case "Branding":
+        case "Branding & Design":
+          replyText = "We create recognizable visual systems across logos, brand guidelines, packaging and marketing assets. Logo packages start at ₹5,000+; full brand identities at ₹15,000+.";
+          replyOptions = ["Pricing", "Get a Quote", "Start Over"];
           break;
-        case "General Inquiry":
-          replyText = "Sure thing! For partnerships, custom consultations, or general questions, our team is happy to chat.";
-          replyOptions = ["Contact Team ➔", "Start Over"];
+        case "Video":
+          replyText = "We produce platform-ready videos for Reels, YouTube, campaigns and brand films. Reel editing starts at ₹2,000+; YouTube editing starts at ₹5,000+.";
+          replyOptions = ["Pricing", "Get a Quote", "Start Over"];
           break;
-        case "Landing Page / Startup":
-          replyText = "Landing pages are key for converting visitors. We design fast, responsive pages that capture leads. Ready to connect and get a quote?";
-          replyOptions = ["Contact Team ➔", "Go Back"];
+        case "AI Automation":
+          replyText = "We build practical AI automations: chatbots, lead workflows, CRM routing and internal assistants. Simple workflows start at ₹10,000+.";
+          replyOptions = ["Pricing", "Get a Quote", "Start Over"];
           break;
-        case "E-Commerce Site":
-          replyText = "We build full-featured stores with payment gateways, cart flows, and fast performance. Would you like to review specifications with our team?";
-          replyOptions = ["Contact Team ➔", "Go Back"];
+        case "Pricing":
+          replyText = "Starting prices: Logo ₹5,000+ | Brand Identity ₹15,000+ | Landing Page ₹8,000+ | Business Website ₹15,000+ | E-commerce ₹25,000+ | Reels ₹2,000+ | YouTube ₹5,000+ | AI Automation ₹10,000+. View our full Pricing page for details!";
+          replyOptions = ["View Pricing Page ➔", "Get a Quote", "Start Over"];
           break;
-        case "Custom App / Portal":
-          replyText = "Got it! Custom SaaS platforms, user portals, or dashboards are our specialty. Let's schedule a call to align technical specifications.";
-          replyOptions = ["Contact Team ➔", "Go Back"];
+        case "View Pricing Page ➔":
+          window.location.href = "/pricing";
           break;
-        case "Video Editing / Reels":
-          replyText = "We edit high-retention short-form videos (Reels, TikToks) and YouTube videos with engaging motion graphics. Let's discuss your project details!";
-          replyOptions = ["Contact Team ➔", "Go Back"];
+        case "Get a Quote":
+          replyText = "Start with a free consultation! Share your objective, required service and timeline, and we will recommend the right scope.";
+          replyOptions = ["Scroll to Contact Form ➔", "Start Over"];
           break;
-        case "Brand Identity / Logo":
-          replyText = "A strong brand identity shapes how customers see your business. We design logos, fonts, and full assets. Ready to outline the details?";
-          replyOptions = ["Contact Team ➔", "Go Back"];
-          break;
-        case "Contact Team ➔":
-          replyText = "Perfect! I will take you to our contact form right now. Fill in your details, and our team will reach out within 24 hours!";
+        case "Scroll to Contact Form ➔":
+          replyText = "Taking you to our consultation form right now! Fill in your essentials and our team will get back to you promptly.";
           replyOptions = ["Start Over"];
-          // Scroll to contact form
           setTimeout(() => {
-            const contactSection = document.getElementById("contact");
-            if (contactSection) {
-              contactSection.scrollIntoView({ behavior: "smooth" });
-              // Close chat helper after scrolling
+            const form = document.getElementById("contact");
+            if (form) {
+              form.scrollIntoView({ behavior: "smooth" });
               setIsOpen(false);
             }
-          }, 800);
+          }, 600);
           break;
-        case "Go Back":
         case "Start Over":
-          replyText = "No problem! What are we building today?";
-          replyOptions = ["Web Development", "Video & Design", "General Inquiry"];
+          replyText = "No problem! What would you like to explore today?";
+          replyOptions = ["Website", "Branding", "Video", "AI Automation", "Pricing", "Get a Quote"];
           break;
         default:
-          replyText = "I'm always learning! Would you like to speak to our team directly?";
-          replyOptions = ["Contact Team ➔", "Start Over"];
+          replyText = "That sounds like a great initiative! AVBT Technologies connects strategy, design, and technology to move your project from concept to execution.";
+          replyOptions = ["Get a Quote", "Start Over"];
           break;
       }
 
@@ -166,7 +160,7 @@ export function AIChatHelper() {
           options: replyOptions,
         },
       ]);
-    }, 1000);
+    }, 800);
   };
 
   const handleCustomSend = (e: React.FormEvent) => {
@@ -199,11 +193,11 @@ export function AIChatHelper() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 font-sans">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 font-sans">
       {/* Chat Window */}
       <div
         className={cn(
-          "absolute bottom-20 right-0 w-[350px] sm:w-[380px] h-[480px] rounded-3xl overflow-hidden glass-card flex flex-col shadow-2xl transition-all duration-300 origin-bottom-right transform",
+          "absolute bottom-16 sm:bottom-20 right-0 w-[calc(100vw-2rem)] sm:w-[380px] max-w-[380px] h-[450px] sm:h-[480px] rounded-2xl sm:rounded-3xl overflow-hidden glass-card flex flex-col shadow-2xl transition-all duration-300 origin-bottom-right transform",
           isOpen
             ? "scale-100 opacity-100 pointer-events-auto"
             : "scale-75 opacity-0 pointer-events-none"
@@ -217,8 +211,11 @@ export function AIChatHelper() {
               <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-accent border-2 border-[#111827] rounded-full" />
             </div>
             <div>
-              <h4 className="font-display font-bold text-white text-sm">AVBT AI</h4>
-              <p className="text-[10px] text-accent font-medium">Systems Active</p>
+              <h3 className="font-semibold text-white text-sm">AVBT AI Assistant</h3>
+              <p className="text-[10px] text-emerald-400 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Online · Ready to Help
+              </p>
             </div>
           </div>
           <button

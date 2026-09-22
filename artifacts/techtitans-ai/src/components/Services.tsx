@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 const services = [
   {
     id: "branding",
-    title: "Creative Branding & Marketing",
-    description: "Build a brand that commands attention and drives growth.",
-    subServices: ["Logo Design", "Brand Identity", "Social Media Design", "Product Packaging", "Banner & Editorial Design", "Marketing Creatives"],
+    title: "Branding & Graphic Design",
+    description: "Build a recognizable visual identity across logos, brand systems, packaging, social media and marketing assets.",
+    subServices: ["Logo Design", "Brand Identity", "Packaging", "Graphic Design", "Visual Identity", "Social Media Design"],
     icon: Megaphone,
     color: "from-purple-500 to-indigo-500",
     delay: 0.1,
@@ -16,8 +16,8 @@ const services = [
   {
     id: "web",
     title: "Web & App Development",
-    description: "Blazing-fast, stunning digital products built to convert.",
-    subServices: ["Business Websites", "Landing Pages", "E-commerce Stores", "Custom Web Apps", "Portfolio Websites", "Mobile UI Design"],
+    description: "Design and build responsive websites, e-commerce experiences, dashboards and custom web applications.",
+    subServices: ["Website Development", "Web Apps", "E-commerce", "UI/UX", "Frontend", "Backend", "SaaS"],
     icon: Code2,
     color: "from-blue-500 to-cyan-500",
     delay: 0.2,
@@ -25,8 +25,8 @@ const services = [
   {
     id: "video",
     title: "Video Production & Editing",
-    description: "Cinematic, high-retention content for every platform.",
-    subServices: ["Reels Editing", "Long-form Video Editing", "Motion Graphics", "Promotional Videos", "Cinematic Editing"],
+    description: "Create platform-ready videos for Reels, YouTube, campaigns, products and brands.",
+    subServices: ["Video Editing", "Reels", "YouTube", "Motion Graphics", "Promotional Video", "Color Grading"],
     icon: Video,
     color: "from-pink-500 to-rose-500",
     delay: 0.3,
@@ -34,8 +34,8 @@ const services = [
   {
     id: "infrastructure",
     title: "Digital Infrastructure",
-    description: "Reliable backend systems keeping your business always online.",
-    subServices: ["Server Management", "Domain Setup", "Website Maintenance", "Hosting Support", "Security Monitoring", "Performance Optimization"],
+    description: "Keep domains, DNS, hosting, servers, SSL, backups and website maintenance organized and reliable.",
+    subServices: ["Domain", "DNS", "Hosting", "Server Management", "SSL", "Backups", "Maintenance"],
     icon: Server,
     color: "from-amber-500 to-orange-500",
     delay: 0.4,
@@ -43,8 +43,8 @@ const services = [
   {
     id: "mentorship",
     title: "Mentorship & Career Guidance",
-    description: "Empowering the next generation of digital professionals.",
-    subServices: ["Internship Programs", "Placement Guidance", "Personalized Learning", "Portfolio Reviews", "Career Mentorship"],
+    description: "Build practical digital skills through mentorship, portfolio work and eligible internship programs.",
+    subServices: ["Digital Skills", "Internship", "Mentorship", "Portfolio", "Career Guidance"],
     icon: GraduationCap,
     color: "from-green-500 to-teal-500",
     delay: 0.5,
@@ -52,8 +52,8 @@ const services = [
   {
     id: "ai",
     title: "AI Automation Solutions",
-    description: "Intelligent workflows that eliminate manual work at scale.",
-    subServices: ["Workflow Automation", "AI Chatbots & Assistants", "Lead Automation", "CRM Automation", "Business Process Automation"],
+    description: "Automate repetitive workflows with AI assistants, chatbots, lead systems and business-process automation.",
+    subServices: ["AI Automation", "AI Chatbot", "Workflow Automation", "CRM Automation", "AI Assistant"],
     icon: Bot,
     color: "from-cyan-500 to-blue-500",
     delay: 0.6,
@@ -67,12 +67,12 @@ export function Services() {
     <section id="services" className="py-24 relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <FadeIn className="text-center mb-16">
-          <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">What We Do</p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">
-            Six Pillars of <span className="text-gradient">Excellence</span>
+          <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">WHAT WE DO — DIGITAL SERVICES</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-5">
+            Digital Services for <span className="text-gradient">Brands, Products &amp; Growth</span>
           </h2>
-          <p className="text-foreground-muted max-w-2xl mx-auto">
-            Six core service pillars — each built to elevate your brand, accelerate your growth, and deliver world-class results.
+          <p className="text-foreground-muted max-w-3xl mx-auto text-base sm:text-lg leading-relaxed">
+            From brand identity to web development, creative production and AI automation, AVBT Technologies brings complementary digital capabilities together so businesses can plan and execute with one partner.
           </p>
         </FadeIn>
 

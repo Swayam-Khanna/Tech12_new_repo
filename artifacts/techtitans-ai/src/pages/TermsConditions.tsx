@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
 
 const sections = [
   {
@@ -15,10 +16,10 @@ These Terms apply to all visitors, clients, and others who access or use our ser
     title: "2. Services Offered",
     content: `AVBT Technologies provides professional digital services including but not limited to:
 
-â€¢ **Branding & Identity Design** â€” Logo creation, visual identity systems, brand guidelines, and packaging design.
-â€¢ **Web Development** â€” Custom websites, web applications, e-commerce stores, and landing pages.
-â€¢ **Graphic Design** â€” Social media graphics, marketing materials, infographics, and print design.
-â€¢ **Video Editing & Motion Graphics** â€” Content creation, brand films, explainer videos, reels, and YouTube content.
+• **Branding & Identity Design** — Logo creation, visual identity systems, brand guidelines, and packaging design.
+• **Web Development** — Custom websites, web applications, e-commerce stores, and landing pages.
+• **Graphic Design** — Social media graphics, marketing materials, infographics, and print design.
+• **Video Editing & Motion Graphics** — Content creation, brand films, explainer videos, reels, and YouTube content.
 
 The specific scope, deliverables, timelines, and pricing for each project are defined in a separate Project Agreement or proposal document signed by both parties.`,
   },
@@ -36,10 +37,10 @@ The specific scope, deliverables, timelines, and pricing for each project are de
     title: "4. Client Responsibilities",
     content: `To ensure smooth project delivery, the client agrees to:
 
-â€¢ Provide all necessary materials, content, assets, and feedback in a timely manner.
-â€¢ Designate a single point of contact for project communication.
-â€¢ Review and provide feedback on deliverables within the agreed review window (typically 5 business days).
-â€¢ Ensure that any materials provided to AVBT Technologies do not infringe upon third-party intellectual property rights.
+• Provide all necessary materials, content, assets, and feedback in a timely manner.
+• Designate a single point of contact for project communication.
+• Review and provide feedback on deliverables within the agreed review window (typically 5 business days).
+• Ensure that any materials provided to AVBT Technologies do not infringe upon third-party intellectual property rights.
 
 Delays caused by the client (e.g., late content delivery, delayed feedback) may result in adjusted project timelines and/or additional costs.`,
   },
@@ -61,7 +62,7 @@ Scope changes that significantly alter the project direction, add features, or e
   },
   {
     title: "7. Confidentiality",
-    content: `Both parties agree to keep all project-related information, business strategies, and proprietary data confidential. AVBT Technologies will not share your project details, business information, or any materials you provide with any third party without your explicit written consent â€” except as required to deliver the agreed services (e.g., sharing assets with a printing vendor).`,
+    content: `Both parties agree to keep all project-related information, business strategies, and proprietary data confidential. AVBT Technologies will not share your project details, business information, or any materials you provide with any third party without your explicit written consent — except as required to deliver the agreed services (e.g., sharing assets with a printing vendor).`,
   },
   {
     title: "8. Limitation of Liability",
@@ -79,9 +80,9 @@ The website and its content are provided "as is." We make no warranties, express
     title: "10. Termination",
     content: `Either party may terminate a project with 14 days' written notice. Upon termination:
 
-â€¢ The client must pay for all work completed up to the termination date.
-â€¢ AVBT Technologies will deliver all completed work-in-progress upon receipt of final payment.
-â€¢ Deposits are non-refundable.
+• The client must pay for all work completed up to the termination date.
+• AVBT Technologies will deliver all completed work-in-progress upon receipt of final payment.
+• Deposits are non-refundable.
 
 AVBT Technologies reserves the right to refuse or terminate services at any time if a client engages in abusive, unethical, or unlawful behavior.`,
   },
@@ -96,7 +97,7 @@ AVBT Technologies reserves the right to refuse or terminate services at any time
 **AVBT Technologies**
 #134/19, Ground Floor, AVBT Building, ITI Road, Solan (H.P.) 173212
 Email: contact@avbt.in
-Phone: 8979768681 | 7876799926 | 86270 79550`,
+Phone: +91 8979768681 | +91 7876799926`,
   },
 ];
 
@@ -105,6 +106,11 @@ export default function TermsConditions() {
 
   return (
     <main className="min-h-screen bg-background">
+      <SEO 
+        title="Terms & Conditions — AVBT Technologies | Service Agreement & Payment Terms"
+        description="Read the terms and conditions for AVBT Technologies services including web development, branding, graphic design, and video editing. Clear deliverables, fair payment terms."
+        keywords="terms conditions AVBT technologies, service agreement, digital agency contract"
+      />
       <Navbar />
 
       <div className="max-w-4xl mx-auto px-6 md:px-12 pt-36 pb-24">
@@ -122,9 +128,9 @@ export default function TermsConditions() {
           <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">Legal</p>
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">Terms &amp; Conditions</h1>
           <p className="text-foreground-muted">
-            Last Revised: <span className="text-white">March 2025</span>
+            Last Revised: <span className="text-white">September 2026</span>
           </p>
-          <p className="text-foreground-muted mt-4 leading-relaxed">
+          <p className="text-foreground-muted mt-4 leading-relaxed font-sans">
             Please read these Terms and Conditions carefully before using AVBT Technologies' website or engaging
             our services. These terms outline the rules and regulations for the use of our services and website.
           </p>
@@ -140,7 +146,7 @@ export default function TermsConditions() {
               className="glass-card rounded-2xl p-8"
             >
               <h2 className="text-xl font-display font-bold text-white mb-4">{section.title}</h2>
-              <div className="text-foreground-muted leading-relaxed text-sm whitespace-pre-line">
+              <div className="text-foreground-muted leading-relaxed text-sm whitespace-pre-line font-sans">
                 {section.content.split("**").map((part, idx) =>
                   idx % 2 === 1 ? (
                     <strong key={idx} className="text-white font-semibold">{part}</strong>

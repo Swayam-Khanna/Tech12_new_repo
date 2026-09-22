@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -233,6 +234,11 @@ export default function Careers() {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col selection:bg-primary selection:text-white">
+      <SEO 
+        title="Careers at AVBT Technologies | Internships & Digital Roles"
+        description="Explore verified career and internship opportunities at AVBT Technologies across design, development, video, marketing and technology."
+        keywords="careers AVBT Technologies, digital agency jobs, internships, remote tech jobs"
+      />
       <Navbar />
 
       <main className="flex-1 pt-32 pb-24">
@@ -240,13 +246,13 @@ export default function Careers() {
         <section className="relative px-6 md:px-12 max-w-7xl mx-auto text-center mb-20">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-6">
             <Briefcase className="w-3.5 h-3.5" />
-            We Are Hiring
+            Careers &amp; Opportunities
           </div>
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6">
-            Build the Future With <span className="text-gradient">AVBT Technologies</span>
+            Build Your Career With <span className="text-gradient">Real Digital Work</span>
           </h1>
           <p className="text-lg md:text-xl text-foreground-muted max-w-3xl mx-auto leading-relaxed">
-            Accelerate your career with real-world impact. Join our ambitious team of engineers, creators, and strategists crafting cutting-edge AI and digital solutions.
+            We look for people who are curious, reliable, willing to learn and able to turn feedback into better work. Open roles vary by business needs.
           </p>
         </section>
 
@@ -254,7 +260,7 @@ export default function Careers() {
         <section className="px-6 md:px-12 max-w-7xl mx-auto mb-28">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-white">Open Internship Positions</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-white">Current Opportunities</h2>
               <p className="text-sm text-foreground-muted mt-1">Explore current openings and find your fit.</p>
             </div>
             <span className="text-xs font-mono px-3 py-1 bg-white/5 border border-white/10 rounded-full text-foreground-muted">
@@ -361,9 +367,9 @@ export default function Careers() {
                 <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-full flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-white">Application Received!</h3>
+                <h3 className="text-2xl font-bold text-white">Application Received — We'll Be in Touch Soon!</h3>
                 <p className="text-sm text-foreground-muted max-w-md mx-auto">
-                  Thank you for applying to AVBT Technologies. We have received your resume and details at <span className="text-white font-mono">techavbt@gmail.com</span>. Our hiring team will get in touch with you shortly.
+                  Thank you for applying to AVBT Technologies. Our hiring team reviews all applications within 3–5 business days. If your profile matches our requirements, we'll reach out to schedule an interview.
                 </p>
                 <Button
                   onClick={() => {

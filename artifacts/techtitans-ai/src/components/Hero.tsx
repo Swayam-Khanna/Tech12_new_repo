@@ -139,7 +139,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden"
+      className="relative min-h-screen flex items-center pt-20 sm:pt-28 pb-10 sm:pb-16 overflow-hidden"
       onMouseMove={handleMouseMove}
     >
       {/* Cinematic canvas background */}
@@ -182,8 +182,8 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card w-fit mx-auto lg:mx-0">
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              <span className="text-sm font-medium text-foreground-muted">Available for new projects</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs font-semibold tracking-wider uppercase text-white/90">DIGITAL DESIGN • TECHNOLOGY • AI</span>
             </div>
           </motion.div>
 
@@ -193,31 +193,17 @@ export function Hero() {
               initial="hidden"
               animate="visible"
             >
-              <div className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold leading-[1.1]">
-                <motion.span variants={wordVariants} className="inline-block mr-4">We</motion.span>
-                <motion.span variants={wordVariants} className="inline-block mr-4">Build</motion.span>
-                <br />
-                {words.map((word, i) => (
-                  <motion.span
-                    key={word}
-                    variants={wordVariants}
-                    className={`inline-block mr-3 ${i === 0 ? "text-gradient" : "text-gradient"}`}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold leading-[1.15] tracking-tight text-white">
+                Digital Solutions That Build <span className="text-gradient">Brands, Products &amp; Growth</span>
+              </h1>
             </motion.div>
           </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="text-lg sm:text-xl text-foreground-muted max-w-xl mx-auto lg:mx-0 leading-relaxed"
-          >
-            Creative branding, web development, video production, AI automation, digital infrastructure & career mentorship — all under one roof.
-          </motion.p>
+          <div className="flex flex-col gap-3 max-w-xl mx-auto lg:mx-0 text-left">
+            <p className="text-base sm:text-lg font-medium text-white/90 leading-relaxed">
+              Branding, web development, creative production and AI automation — brought together under one digital partner.
+            </p>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -225,10 +211,10 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 1.0 }}
             className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start"
           >
-            <a href="/#contact" tabIndex={-1}>
-              <Button size="lg" className="w-full sm:w-auto group relative overflow-hidden">
+            <a href="/#contact-form" tabIndex={-1}>
+              <Button size="lg" className="w-full sm:w-auto group relative overflow-hidden font-semibold">
                 <span className="relative z-10 flex items-center gap-2">
-                  Get Started
+                  Get a Free Consultation
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
                 <motion.span
@@ -238,10 +224,13 @@ export function Hero() {
             </a>
             <a href="/portfolio" tabIndex={-1}>
               <Button variant="outline" size="lg" className="w-full sm:w-auto glow-border group">
-                <span className="group-hover:text-white transition-colors">View Portfolio</span>
+                <span className="group-hover:text-white transition-colors">Explore Our Work</span>
               </Button>
             </a>
           </motion.div>
+          <p className="text-xs text-foreground-muted/80 -mt-3">
+            Tell us what you are building. We'll help define the right next step.
+          </p>
         </div>
 
         {/* Right Visual */}
@@ -262,10 +251,10 @@ export function Hero() {
               {/* Subtle background gradient glow behind rings */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-r from-blue-600/30 to-emerald-500/25 rounded-full blur-[80px] pointer-events-none" />
 
-              {/* Top Left Tag: AI POWERED */}
+              {/* Top Left Tag: AI-POWERED */}
               <div className="flex justify-between items-center mb-2 z-10 relative">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-400 text-xs font-semibold tracking-wide">
-                  <span className="text-[13px]">⚡</span> AI POWERED
+                  <span className="text-[13px]">⚡</span> AI-POWERED DIGITAL AGENCY
                 </div>
               </div>
 
@@ -273,7 +262,12 @@ export function Hero() {
               <div className="relative z-10 my-3 rounded-2xl overflow-hidden border border-white/10 shadow-lg">
                 <motion.img
                   src="/images/hero-tech-office.jpg"
-                  alt="AVBT Technologies Modern Infrastructure & Development Workspace"
+                  alt="AVBT Technologies Modern Digital Agency Workspace"
+                  width="448"
+                  height="280"
+                  fetchPriority="high"
+                  loading="eager"
+                  decoding="async"
                   className="w-full h-[260px] sm:h-[300px] object-cover object-center transform transition-transform duration-700 hover:scale-105"
                   animate={{ scale: [1, 1.015, 1] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -283,37 +277,37 @@ export function Hero() {
               </div>
 
               {/* Bottom Feature Pill Card */}
-              <div className="relative z-10 mt-2 p-3 sm:p-3.5 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md grid grid-cols-3 gap-2 text-left">
+              <div className="relative z-10 mt-2 p-2.5 sm:p-3.5 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-1.5 text-left">
                 {/* Item 1 */}
-                <div className="flex items-center gap-2.5 p-1">
+                <div className="flex items-center gap-2.5 sm:gap-2 p-1">
                   <div className="w-8 h-8 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0">
                     <span className="text-sm">⚛</span>
                   </div>
-                  <div>
-                    <h5 className="text-[11px] sm:text-xs font-bold text-white leading-tight">AI Automation</h5>
-                    <p className="text-[9px] sm:text-[10px] text-foreground-muted leading-tight">Smart Solutions</p>
+                  <div className="min-w-0">
+                    <h5 className="text-[12px] sm:text-xs font-bold text-white leading-tight truncate sm:whitespace-normal">AI Automation</h5>
+                    <p className="text-[10px] text-foreground-muted leading-tight">Cut Workload 80%</p>
                   </div>
                 </div>
 
                 {/* Item 2 */}
-                <div className="flex items-center gap-2.5 p-1 border-l border-white/5 pl-2">
+                <div className="flex items-center gap-2.5 sm:gap-2 p-1 border-t sm:border-t-0 sm:border-l border-white/5 pt-1.5 sm:pt-1 sm:pl-2">
                   <div className="w-8 h-8 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-cyan-400 shrink-0">
                     <span className="text-sm">💻</span>
                   </div>
-                  <div>
-                    <h5 className="text-[11px] sm:text-xs font-bold text-white leading-tight">Web Development</h5>
-                    <p className="text-[9px] sm:text-[10px] text-foreground-muted leading-tight">Scalable Platforms</p>
+                  <div className="min-w-0">
+                    <h5 className="text-[12px] sm:text-xs font-bold text-white leading-tight truncate sm:whitespace-normal">Web Development</h5>
+                    <p className="text-[10px] text-foreground-muted leading-tight">Loads Under 2s</p>
                   </div>
                 </div>
 
                 {/* Item 3 */}
-                <div className="flex items-center gap-2.5 p-1 border-l border-white/5 pl-2">
+                <div className="flex items-center gap-2.5 sm:gap-2 p-1 border-t sm:border-t-0 sm:border-l border-white/5 pt-1.5 sm:pt-1 sm:pl-2">
                   <div className="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
                     <span className="text-sm">🚀</span>
                   </div>
-                  <div>
-                    <h5 className="text-[11px] sm:text-xs font-bold text-white leading-tight">Digital Systems</h5>
-                    <p className="text-[9px] sm:text-[10px] text-foreground-muted leading-tight">Powerful Infra</p>
+                  <div className="min-w-0">
+                    <h5 className="text-[12px] sm:text-xs font-bold text-white leading-tight truncate sm:whitespace-normal">Digital Systems</h5>
+                    <p className="text-[10px] text-foreground-muted leading-tight">99.9% Uptime</p>
                   </div>
                 </div>
               </div>
@@ -323,11 +317,11 @@ export function Hero() {
             <motion.div
               animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-6 -right-4 sm:-right-6 rounded-2xl p-3.5 sm:p-4 bg-[#0F172A]/85 border border-white/15 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 min-w-[150px] sm:min-w-[170px]"
+              className="absolute -top-6 -right-2 sm:-right-6 rounded-2xl p-2.5 sm:p-4 bg-[#0F172A]/85 border border-white/15 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 min-w-[150px] sm:min-w-[190px]"
             >
-              <div className="text-[11px] font-medium text-foreground-muted">Conversion Rate</div>
-              <div className="text-xl sm:text-2xl font-display font-extrabold text-white my-0.5 tracking-tight">
-                +248%
+              <div className="text-[10px] sm:text-[11px] font-medium text-foreground-muted">Client Revenue Grown</div>
+              <div className="text-lg sm:text-2xl font-display font-extrabold text-emerald-400 my-0.5 tracking-tight">
+                +248% Avg.
               </div>
               {/* Green trend line graph */}
               <div className="flex items-center my-1.5">
@@ -340,7 +334,7 @@ export function Hero() {
                   />
                 </svg>
               </div>
-              <div className="text-[10px] text-foreground-muted/80">vs Last 30 Days</div>
+              <div className="text-[10px] text-foreground-muted/80">In 90 Days Growth</div>
             </motion.div>
           </motion.div>
         </motion.div>

@@ -1,35 +1,36 @@
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { ArrowLeft, Target, Eye, Heart, Users, Award, Zap } from "lucide-react";
+import { ArrowLeft, Target, Eye, Users, Zap, Award, BarChart3, Handshake } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
 
 const team = [
   {
     name: "Aryan Sharma",
     role: "Founder & Creative Director",
-    bio: "Visionary behind AVBT Technologies. Leads brand strategy and creative direction for all client projects.",
+    bio: "Aryan is the strategic and creative force behind AVBT Technologies. With 4+ years in digital branding and agency management, he leads brand strategy, client relationships, and creative direction for all major projects.",
     initials: "AS",
     color: "from-blue-500 to-cyan-500",
   },
   {
     name: "Rahul Verma",
     role: "Lead Web Developer",
-    bio: "Full-stack engineer with expertise in React, Node.js, and scalable cloud architectures.",
+    bio: "Full-stack engineer with deep expertise in React, Next.js, Node.js, and cloud architectures. Rahul leads all web and app development projects at AVBT Technologies, ensuring every digital product is fast, scalable, and built to last.",
     initials: "RV",
     color: "from-violet-500 to-purple-500",
   },
   {
     name: "Priya Singh",
     role: "Head of Design",
-    bio: "Award-winning designer specializing in brand identity, UI/UX, and motion graphics.",
+    bio: "Award-winning visual designer specializing in brand identity systems, UI/UX design, and motion graphics. Priya oversees the design quality across all AVBT client projects and is the creative backbone of the branding team.",
     initials: "PS",
     color: "from-pink-500 to-rose-500",
   },
   {
     name: "Karan Thakur",
     role: "Video Production Lead",
-    bio: "Cinematic storyteller with 5+ years of experience in video editing, color grading, and motion design.",
+    bio: "Cinematic storyteller with 5+ years of professional video editing, DaVinci Resolve color grading, and motion design. Karan produces the video content that helps AVBT clients grow their audiences and sell their products.",
     initials: "KT",
     color: "from-green-500 to-teal-500",
   },
@@ -37,32 +38,32 @@ const team = [
 
 const values = [
   {
-    icon: Target,
-    title: "Results-Driven",
-    desc: "Every decision we make is rooted in achieving measurable outcomes for our clients — not just pretty deliverables.",
+    icon: BarChart3,
+    title: "Understand Before Choosing",
+    desc: "Understand the business before choosing the technology. We ensure every tech stack or design system serves your strategic objectives.",
+  },
+  {
+    icon: Eye,
+    title: "Design for the Audience",
+    desc: "Design for the audience, not only the visual trend. A visually stunning asset must convert and resonate with your end users.",
+  },
+  {
+    icon: Handshake,
+    title: "Maintainable Foundations",
+    desc: "Build maintainable foundations instead of quick patches. Quality code, scalable architecture, and modular design guidelines.",
   },
   {
     icon: Zap,
-    title: "Speed & Precision",
-    desc: "We move fast without cutting corners. Our streamlined workflows let us deliver premium work on tight timelines.",
-  },
-  {
-    icon: Heart,
-    title: "Client-First Always",
-    desc: "We treat every project as if it were our own business. Your success is our success, and we never forget that.",
-  },
-  {
-    icon: Award,
-    title: "Uncompromising Quality",
-    desc: "We set the bar high and hold ourselves to it — every pixel, every line of code, every frame of video.",
+    title: "Practical AI Value",
+    desc: "Use AI where it creates practical value. Automate repetitive friction, route information accurately, and retain human oversight.",
   },
 ];
 
 const stats = [
-  { value: "50+", label: "Projects Delivered" },
-  { value: "30+", label: "Happy Clients" },
-  { value: "4+", label: "Years of Experience" },
-  { value: "100%", label: "Client Satisfaction" },
+  { value: "50+", label: "Projects Delivered Across India" },
+  { value: "30+", label: "Satisfied Clients — Startups to SMEs" },
+  { value: "4+", label: "Years Building Digital Products" },
+  { value: "100%", label: "Client Satisfaction & Delivery" },
 ];
 
 export default function AboutUs() {
@@ -70,6 +71,11 @@ export default function AboutUs() {
 
   return (
     <main className="min-h-screen bg-background">
+      <SEO
+        title="About AVBT Technologies | Digital Design, Development & AI"
+        description="Learn about AVBT Technologies, a digital agency combining branding, technology, creative production and AI automation for businesses."
+        keywords="about AVBT Technologies, digital agency, creative production, AI automation, branding, web development"
+      />
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-36 pb-24">
@@ -89,18 +95,28 @@ export default function AboutUs() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-24"
+          className="mb-16"
         >
-          <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">About Us</p>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-8 leading-tight max-w-4xl">
-            We Are the Innovators <br />
-            <span className="text-gradient">Behind Your Brand.</span>
+          <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">ABOUT AVBT TECHNOLOGIES</p>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-8 leading-tight max-w-4xl text-white">
+            Building Digital <span className="text-gradient">Brands, Products &amp; Systems</span>
           </h1>
-          <p className="text-foreground-muted text-lg md:text-xl max-w-3xl leading-relaxed">
-            AVBT Technologies is a premium digital agency based in Solan, Himachal Pradesh. Founded with one mission —
-            to help ambitious brands look world-class and grow faster through intelligent design, cutting-edge
-            development, and powerful storytelling.
-          </p>
+          
+          {/* Main Copy & Entity Definition Block */}
+          <div className="p-6 md:p-8 rounded-2xl bg-surface/80 border border-primary/20 backdrop-blur-md mb-8 max-w-4xl shadow-lg space-y-4">
+            <p className="text-white/95 text-base md:text-lg leading-relaxed font-sans">
+              AVBT Technologies is a digital agency and technology partner focused on the intersection of design, development, creative production and AI automation. We help businesses move from idea to execution through connected digital services rather than disconnected deliverables.
+            </p>
+            <p className="text-foreground-muted text-sm md:text-base leading-relaxed font-sans">
+              The company is based in Solan, Himachal Pradesh, India, while digital delivery can support clients beyond its home market where the service and project requirements allow.
+            </p>
+            <div className="pt-4 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-foreground-muted">
+              <div><strong className="text-white">Business:</strong> AVBT Technologies</div>
+              <div><strong className="text-white">Domain:</strong> avbt.in</div>
+              <div><strong className="text-white">Base:</strong> Solan, Himachal Pradesh, India</div>
+              <div><strong className="text-white">Services:</strong> Branding • Web &amp; App • Video • Infrastructure • Mentorship • AI</div>
+            </div>
+          </div>
         </motion.div>
 
         {/* Stats */}
@@ -119,7 +135,7 @@ export default function AboutUs() {
               className="glass-card rounded-2xl p-6 text-center"
             >
               <p className="text-3xl md:text-4xl font-display font-bold text-gradient mb-2">{stat.value}</p>
-              <p className="text-foreground-muted text-sm">{stat.label}</p>
+              <p className="text-foreground-muted text-xs sm:text-sm font-medium">{stat.label}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -132,48 +148,43 @@ export default function AboutUs() {
           className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 items-center"
         >
           <div>
-            <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-5">Our Story</p>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-              Built from Passion, <br /> Driven by Purpose
+            <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-5">OUR STORY</p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-white">
+              From Solan to Scaling Brands Across India — Our Story
             </h2>
             <div className="space-y-5 text-foreground-muted leading-relaxed">
               <p>
-                AVBT Technologies was born out of a simple frustration — too many great businesses were being held back
-                by poor digital presence. We saw startups with amazing products losing to competitors simply because
-                of weaker branding, slower websites, and no content strategy.
+                AVBT Technologies was founded in Solan, Himachal Pradesh, out of a clear-eyed frustration: too many genuinely great Indian businesses were invisible online. Startups with world-class products were losing customers to competitors with stronger branding, faster websites, and sharper content strategies — not better products.
               </p>
               <p>
-                So we built a team of specialists across branding, web development, graphic design, and video
-                production — all under one roof. Today, we partner with startups, creators, and growing businesses
-                to build digital identities that demand attention and drive real results.
+                We assembled a specialist team — brand designers, full-stack developers, video producers, and AI engineers — and put them under one roof. Today, AVBT Technologies is Himachal Pradesh's leading digital agency, serving startups, creators, and growing businesses with the creative quality of a top-tier city studio and the personal care of a boutique partner.
               </p>
               <p>
-                Based in Solan, H.P., we serve clients across India and beyond, combining the discipline of a
-                big-city agency with the personal care of a boutique studio.
+                Based in Solan (H.P.), we work with clients across India and internationally — combining deep technical expertise, creative excellence, and an obsession with results that our clients can measure.
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="glass-card rounded-2xl p-6 flex flex-col items-start gap-3">
               <Target className="w-8 h-8 text-primary" />
               <h4 className="font-display font-bold text-white">Our Mission</h4>
-              <p className="text-foreground-muted text-sm">To make world-class digital design accessible to every ambitious brand.</p>
+              <p className="text-foreground-muted text-sm">To make world-class digital design, development, and automation accessible to every ambitious Indian brand — regardless of size or stage.</p>
             </div>
-            <div className="glass-card rounded-2xl p-6 flex flex-col items-start gap-3 mt-8">
+            <div className="glass-card rounded-2xl p-6 flex flex-col items-start gap-3 sm:mt-8">
               <Eye className="w-8 h-8 text-accent" />
               <h4 className="font-display font-bold text-white">Our Vision</h4>
-              <p className="text-foreground-muted text-sm">To become the most trusted digital partner for the next generation of brands.</p>
+              <p className="text-foreground-muted text-sm">To be the most trusted full-service digital agency for the next generation of Indian startups and growth-stage companies.</p>
             </div>
             <div className="glass-card rounded-2xl p-6 flex flex-col items-start gap-3">
               <Users className="w-8 h-8 text-accent" />
               <h4 className="font-display font-bold text-white">Who We Serve</h4>
-              <p className="text-foreground-muted text-sm">Startups, entrepreneurs, creators, and SMEs ready to invest in their brand.</p>
+              <p className="text-foreground-muted text-sm">Startups launching their first brand, entrepreneurs ready to go digital, SMEs scaling their online presence, and creators building audience-driven businesses across India.</p>
             </div>
-            <div className="glass-card rounded-2xl p-6 flex flex-col items-start gap-3 mt-8">
-              <Heart className="w-8 h-8 text-primary" />
-              <h4 className="font-display font-bold text-white">What We Love</h4>
-              <p className="text-foreground-muted text-sm">Complex problems with elegant solutions and clients who care about quality.</p>
+            <div className="glass-card rounded-2xl p-6 flex flex-col items-start gap-3 sm:mt-8">
+              <Zap className="w-8 h-8 text-primary" />
+              <h4 className="font-display font-bold text-white">What We Specialize In</h4>
+              <p className="text-foreground-muted text-sm">Complex digital challenges — brand identity systems, high-performance web applications, AI automation pipelines, and cinematic video content — delivered with precision and creative excellence.</p>
             </div>
           </div>
         </motion.div>
@@ -185,8 +196,8 @@ export default function AboutUs() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-24"
         >
-          <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">Our Values</p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-12">What We Stand For</h2>
+          <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">OUR APPROACH</p>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-12 text-white">Principles That Drive Every Project</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((val, i) => (
               <motion.div
@@ -211,8 +222,8 @@ export default function AboutUs() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-24"
         >
-          <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">The Team</p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-12">The Titans Behind the Work</h2>
+          <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">THE TEAM</p>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-12 text-white">Meet the AVBT Technologies Team — Designers, Developers & Strategists</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {team.map((member, i) => (
               <motion.div
@@ -220,14 +231,16 @@ export default function AboutUs() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }}
-                className="glass-card rounded-2xl p-6 text-center"
+                className="glass-card rounded-2xl p-6 text-center flex flex-col justify-between"
               >
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${member.color} flex items-center justify-center mx-auto mb-4`}>
-                  <span className="text-white font-display font-bold text-xl">{member.initials}</span>
+                <div>
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${member.color} flex items-center justify-center mx-auto mb-4 shadow-md`}>
+                    <span className="text-white font-display font-bold text-xl">{member.initials}</span>
+                  </div>
+                  <h3 className="font-display font-bold text-white mb-1">{member.name}</h3>
+                  <p className="text-primary text-xs font-semibold mb-3">{member.role}</p>
+                  <p className="text-foreground-muted text-sm leading-relaxed">{member.bio}</p>
                 </div>
-                <h3 className="font-display font-bold text-white mb-1">{member.name}</h3>
-                <p className="text-primary text-xs font-semibold mb-3">{member.role}</p>
-                <p className="text-foreground-muted text-sm leading-relaxed">{member.bio}</p>
               </motion.div>
             ))}
           </div>
@@ -238,19 +251,19 @@ export default function AboutUs() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="glass-card rounded-3xl p-12 text-center"
+          className="glass-card rounded-3xl p-10 md:p-14 text-center max-w-4xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Ready to Work With <span className="text-gradient">Titans?</span>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white">
+            Ready to Work with <span className="text-gradient">Himachal's Best Digital Team?</span>
           </h2>
-          <p className="text-foreground-muted mb-8 max-w-xl mx-auto">
-            Let's build something extraordinary together. Reach out today and get a free consultation.
+          <p className="text-foreground-muted mb-8 max-w-xl mx-auto text-base sm:text-lg">
+            Connect with AVBT Technologies. We'll audit your current digital presence, identify growth opportunities, and propose a clear action plan — no pitch, just value.
           </p>
           <a
-            href="/#contact"
-            className="inline-block py-4 px-10 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-semibold hover:opacity-90 transition-opacity"
+            href="/#contact-form"
+            className="inline-block py-4 px-10 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-semibold hover:opacity-95 shadow-lg shadow-primary/20 transition-all hover:scale-105"
           >
-            Get in Touch
+            Get Free Strategy Guide →
           </a>
         </motion.div>
       </div>

@@ -39,6 +39,18 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
+    target: "esnext",
+    minify: "esbuild",
+    cssMinify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom", "wouter"],
+          "vendor-framer": ["framer-motion"],
+          "vendor-icons": ["lucide-react"],
+        },
+      },
+    },
   },
   server: {
     port,

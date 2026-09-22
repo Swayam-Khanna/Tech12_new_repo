@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { FadeIn } from "./ui/fade-in";
@@ -16,6 +16,37 @@ export function Contact() {
     subService: "",
     message: "",
   });
+
+  // Automatically pre-select service or focus form when navigating with hash / query
+  useEffect(() => {
+    const handleHashAndParams = () => {
+      if (window.location.hash === "#contact" || window.location.hash === "#contact-form") {
+        const formEl = document.getElementById("contact-form");
+        if (formEl) {
+          formEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+
+      // Check URL query parameters (e.g. ?service=Branding%20%26%20Graphic%20Design)
+      const searchParams = new URLSearchParams(window.location.search);
+      const serviceParam = searchParams.get("service");
+      if (serviceParam) {
+        const matched = servicesData.find(
+          (s) =>
+            s.shortTitle.toLowerCase() === serviceParam.toLowerCase() ||
+            s.id.toLowerCase() === serviceParam.toLowerCase() ||
+            s.title.toLowerCase().includes(serviceParam.toLowerCase())
+        );
+        if (matched) {
+          setForm((prev) => ({ ...prev, service: matched.shortTitle }));
+        }
+      }
+    };
+
+    handleHashAndParams();
+    window.addEventListener("hashchange", handleHashAndParams);
+    return () => window.removeEventListener("hashchange", handleHashAndParams);
+  }, []);
 
   const currentService = servicesData.find(
     (s) => s.shortTitle === form.service || s.title === form.service || s.id === form.service
@@ -56,7 +87,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden">
+    <section id="contact" className="py-24 relative overflow-hidden scroll-mt-20">
       <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
@@ -65,14 +96,15 @@ export function Contact() {
           {/* Left: Info */}
           <div>
             <FadeIn>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6">
-                Let's Work <span className="text-gradient">Together</span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6 text-white">
+                Let's Build Something <span className="text-gradient">That Matters</span>
               </h2>
-              <p className="text-foreground-muted text-lg mb-12 max-w-md">
-                Ready to elevate your digital presence? Reach out to us to discuss your project, and let's create something extraordinary.
+              <p className="text-foreground-muted text-lg mb-6 max-w-lg leading-relaxed font-sans">
+                Have a project, redesign, automation idea or digital problem? Send the essentials and we'll review the scope before recommending the next step.
               </p>
-
-
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-xs text-foreground-muted max-w-lg">
+                <strong>No-pressure consultation:</strong> Project information is used to understand your enquiry and respond appropriately.
+              </div>
             </FadeIn>
           </div>
 
@@ -84,14 +116,14 @@ export function Contact() {
                   <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-6">
                     <CheckCircle2 className="w-8 h-8 text-accent" />
                   </div>
-                  <h3 className="text-2xl font-display font-bold text-white mb-2">Message Sent!</h3>
-                  <p className="text-foreground-muted">
-                    Thank you for reaching out. We'll get back to you within 24 hours.
+                  <h3 className="text-2xl font-display font-bold text-white mb-2">Message Received! We'll Be in Touch Within 24 Hours.</h3>
+                  <p className="text-foreground-muted max-w-md">
+                    A member of our team at AVBT Technologies will review your inquiry and respond promptly. While you wait, explore our portfolio to see recent work.
                   </p>
                 </div>
               ) : null}
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form id="contact-form" onSubmit={handleSubmit} className="space-y-6 scroll-mt-28">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-white/80 ml-1">Name</label>
@@ -198,10 +230,11 @@ export function Contact() {
 
                 <Button
                   type="submit"
+                  size="lg"
                   disabled={isSubmitting}
-                  className="w-full"
+                  className="w-full font-semibold"
                 >
-                  {isSubmitting ? "Sending..." : "Send Message"}
+                  {isSubmitting ? "Sending..." : "Get a Free Consultation"}
                 </Button>
               </form>
             </div>

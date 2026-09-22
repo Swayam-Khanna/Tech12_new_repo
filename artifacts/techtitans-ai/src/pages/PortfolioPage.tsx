@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ArrowLeft, Loader2, Layers } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
 import { useProjects } from "@/hooks/useProjects";
 import { servicesData } from "@/data/servicesData";
 import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
@@ -23,22 +24,27 @@ export default function PortfolioPage() {
 
   return (
     <main className="min-h-screen bg-background overflow-x-hidden">
+      <SEO
+        title="AVBT Technologies Portfolio | Branding, Websites, Video & AI Projects"
+        description="Explore AVBT Technologies projects across branding, web development, creative production, infrastructure and AI automation."
+        keywords="AVBT Technologies portfolio, branding case studies, web development projects, AI automation portfolio, video production"
+      />
       <Navbar />
 
       {/* Hero */}
       <section className="pt-36 pb-16 px-6 md:px-12 max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-14">
-          <button onClick={() => navigate("/")} className="inline-flex items-center gap-2 text-foreground-muted hover:text-white transition-colors mb-10 group">
+          <button onClick={() => navigate("/")} className="inline-flex items-center gap-2 text-foreground-muted hover:text-white transition-colors mb-8 group">
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Back to Home
           </button>
-          <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">Our Work</p>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-5 leading-tight">
-            Every Project, <br />
-            <span className="text-gradient">A Story Told.</span>
+          <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">SELECTED WORK</p>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-5 leading-tight text-white">
+            Selected Work — <br />
+            <span className="text-gradient">Strategy, Design, Technology &amp; Automation</span>
           </h1>
-          <p className="text-foreground-muted text-lg max-w-2xl">
-            We don't just deliver files — we deliver results. Choose a service category to explore case studies from that domain.
+          <p className="text-foreground-muted text-base sm:text-lg max-w-3xl leading-relaxed">
+            Every case study represents the problem, the solution, the actual work delivered and the evidence behind the result. Browse by service category to explore case studies, see the work, and understand the systems we have built.
           </p>
         </motion.div>
 

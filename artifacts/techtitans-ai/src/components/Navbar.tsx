@@ -17,7 +17,8 @@ export function Navbar() {
 
   const navLinks = [
     { name: "Services", href: "/#services" },
-    { name: "Portfolio", href: "/portfolio" },
+    { name: "Work", href: "/portfolio" },
+    { name: "Pricing", href: "/pricing" },
     { name: "About", href: "/about" },
     { name: "Careers", href: "/careers" },
     { name: "Contact", href: "/#contact" },
@@ -32,10 +33,12 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center group relative z-50 transition-transform duration-300 hover:scale-105 active:scale-95">
+        <a href="/" className="flex items-center group relative z-50 transition-transform duration-300 hover:scale-105 active:scale-95" aria-label="AVBT Technologies Home">
           <img
             src="/abvt-navbar-logo.png"
             alt="AVBT Technologies"
+            width="180"
+            height="40"
             className="h-9 md:h-10 w-auto max-w-[200px] object-contain drop-shadow-[0_2px_12px_rgba(59,130,246,0.3)]"
           />
         </a>
@@ -53,9 +56,9 @@ export function Navbar() {
               </a>
             ))}
           </div>
-          <a href="#contact" tabIndex={-1}>
+          <a href="/#contact-form" tabIndex={-1}>
             <Button variant="outline" size="sm" className="glow-border">
-              Start Project
+              Get a Free Consultation
             </Button>
           </a>
         </div>
@@ -64,7 +67,7 @@ export function Navbar() {
         <button
           className="md:hidden text-white p-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
+          aria-label="Toggle navigation menu"
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -77,14 +80,16 @@ export function Navbar() {
             <a
               key={link.name}
               href={link.href}
-              className="text-lg font-medium text-foreground-muted hover:text-white transition-colors"
+              className="text-base font-medium text-foreground-muted hover:text-white transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               {link.name}
             </a>
           ))}
-          <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mt-4" tabIndex={-1}>
-            <Button className="w-full">Start Project</Button>
+          <a href="/#contact-form" tabIndex={-1} onClick={() => setMobileMenuOpen(false)}>
+            <Button variant="outline" className="w-full mt-2 glow-border">
+              Get a Free Consultation
+            </Button>
           </a>
         </div>
       )}

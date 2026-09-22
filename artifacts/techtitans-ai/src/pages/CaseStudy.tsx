@@ -585,7 +585,7 @@ export default function CaseStudy() {
                     </a>
                   ) : (
                     <button
-                      onClick={() => navigate("/#contact")}
+                      onClick={() => navigate("/#contact-form")}
                       className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-semibold transition-all hover:scale-[1.02]"
                     >
                       {isWeb ? <Globe className="w-4 h-4 text-primary" /> : <Play className="w-4 h-4 text-primary fill-current" />}
@@ -683,7 +683,7 @@ export default function CaseStudy() {
 
             {/* CTA */}
             <button
-              onClick={() => navigate("/#contact")}
+              onClick={() => navigate("/#contact-form")}
               className={`block w-full text-center py-4 px-6 rounded-xl font-semibold text-white transition-all hover:scale-[1.02] hover:opacity-90 ${service ? `bg-gradient-to-r ${service.color}` : "bg-gradient-to-r from-primary to-accent"}`}
             >
               Start a Similar Project

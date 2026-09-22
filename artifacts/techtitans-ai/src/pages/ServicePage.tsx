@@ -1,8 +1,9 @@
 import { useParams, useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Loader2, HelpCircle } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
 import { servicesData } from "@/data/servicesData";
 import { useProjects } from "@/hooks/useProjects";
 import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
@@ -27,33 +28,56 @@ export default function ServicePage() {
     );
   }
 
+  // Generate FAQPage JSON-LD schema for AEO & GEO
+  const faqSchema = service.faqs && service.faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": service.faqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer,
+      },
+    })),
+  } : undefined;
+
   return (
     <main className="min-h-screen bg-background overflow-x-hidden">
+      <SEO
+        title={service.metaTitle || `${service.title} — AVBT Technologies`}
+        description={service.metaDescription || service.description.slice(0, 160)}
+        keywords={service.metaKeywords}
+        schema={faqSchema}
+      />
       <Navbar />
 
       {/* Hero */}
-      <div className="relative h-[75vh] min-h-[550px] overflow-hidden">
-        <img src={service.heroImage} alt={service.shortTitle} className="w-full h-full object-cover opacity-25" />
+      <div className="relative min-h-[600px] py-20 flex items-center overflow-hidden">
+        <img src={service.heroImage} alt={service.shortTitle} className="w-full h-full object-cover opacity-20 absolute inset-0" />
         <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${service.gradientFrom}, ${service.gradientTo})` }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/40 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/60 to-transparent" />
 
         <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full blur-[80px] opacity-20" style={{ background: `linear-gradient(135deg, ${service.gradientFrom}, transparent)` }} />
         <div className="absolute bottom-1/3 right-1/3 w-48 h-48 rounded-full blur-[60px] opacity-15" style={{ background: `linear-gradient(135deg, transparent, ${service.gradientTo})` }} />
 
-        <div className="absolute inset-0 flex flex-col justify-end pb-20 px-6 md:px-16 max-w-7xl mx-auto w-full">
+        <div className="relative z-10 pt-20 px-6 md:px-16 max-w-7xl mx-auto w-full">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <button onClick={() => navigate("/#services")} className="inline-flex items-center gap-2 text-foreground-muted hover:text-white transition-colors mb-8 group">
+            <button onClick={() => navigate("/#services")} className="inline-flex items-center gap-2 text-foreground-muted hover:text-white transition-colors mb-6 group">
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               All Services
             </button>
-            <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold border border-white/20 bg-white/5 text-white mb-5 backdrop-blur-sm">
+            <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold border border-white/20 bg-white/5 text-white mb-4 backdrop-blur-sm">
               {service.shortTitle}
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-5 leading-tight max-w-4xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 leading-tight max-w-4xl">
               {service.title}
             </h1>
-            <p className="text-foreground-muted text-lg md:text-xl max-w-2xl">{service.description}</p>
+            <p className="text-primary-light text-lg sm:text-xl font-medium mb-5 max-w-2xl">{service.tagline}</p>
+            <div className="text-foreground-muted text-base sm:text-lg max-w-3xl leading-relaxed space-y-4 whitespace-pre-line">
+              {service.description}
+            </div>
           </motion.div>
         </div>
       </div>
@@ -170,6 +194,40 @@ export default function ServicePage() {
           </motion.div>
         ) : null}
 
+        {/* FAQ Section — AEO & GEO Optimized */}
+        {service.faqs && service.faqs.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="mb-24 max-w-4xl"
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="w-5 h-5 text-primary" />
+              <p className="text-primary font-semibold tracking-widest text-sm uppercase">FREQUENTLY ASKED QUESTIONS</p>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-8 text-white">
+              Questions About Our {service.shortTitle}
+            </h2>
+            <div className="space-y-4">
+              {service.faqs.map((faq, i) => (
+                <div
+                  key={i}
+                  className="glass-card rounded-2xl p-6 sm:p-7 border border-white/10 hover:border-primary/30 transition-colors"
+                >
+                  <h3 className="text-lg font-bold text-white mb-2.5 flex items-start gap-3">
+                    <span className="text-primary text-sm font-mono mt-1">Q.</span>
+                    {faq.question}
+                  </h3>
+                  <p className="text-foreground-muted text-sm sm:text-base leading-relaxed pl-7">
+                    {faq.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
         {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -190,8 +248,8 @@ export default function ServicePage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
-                onClick={() => navigate("/#contact")}
-                className="inline-flex items-center gap-2 py-4 px-8 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-semibold hover:opacity-90 hover:scale-105 transition-all duration-300 group"
+                onClick={() => navigate(`/#contact-form?service=${encodeURIComponent(service.shortTitle)}`)}
+                className="inline-flex items-center gap-2 py-4 px-8 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-semibold hover:opacity-90 hover:scale-105 transition-all duration-300 group shadow-lg shadow-primary/25"
               >
                 Start a Project
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

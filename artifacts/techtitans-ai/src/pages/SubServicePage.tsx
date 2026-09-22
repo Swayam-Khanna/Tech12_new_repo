@@ -181,7 +181,7 @@ export default function SubServicePage() {
             </h3>
             <p className="text-foreground-muted mb-6 max-w-md mx-auto">Let's talk about what you're building and how we can help you get there.</p>
             <button
-              onClick={() => navigate("/#contact")}
+              onClick={() => navigate(`/#contact-form?service=${encodeURIComponent(service.shortTitle)}`)}
               className={`inline-flex items-center gap-2 py-3 px-7 rounded-xl bg-gradient-to-r ${service.color} text-white font-semibold hover:opacity-90 hover:scale-105 transition-all duration-300`}
             >
               Start a Project
