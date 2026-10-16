@@ -7,32 +7,28 @@ import { SEO } from "@/components/SEO";
 
 const team = [
   {
-    name: "Aryan Sharma",
-    role: "Founder & Creative Director",
-    bio: "Aryan is the strategic and creative force behind AVBT Technologies. With 4+ years in digital branding and agency management, he leads brand strategy, client relationships, and creative direction for all major projects.",
-    initials: "AS",
+    name: "Nishant Sharma",
+    role: "HR Manager & Project Coordinator",
+    bio: "Driving organizational excellence, client coordination, and smooth project lifecycles. Nishant bridges internal talent with client objectives to ensure timely, high-standard execution across every deliverable.",
+    image: "/images/team/nishant-sharma.webp",
+    initials: "NS",
     color: "from-blue-500 to-cyan-500",
   },
   {
-    name: "Rahul Verma",
-    role: "Lead Web Developer",
-    bio: "Full-stack engineer with deep expertise in React, Next.js, Node.js, and cloud architectures. Rahul leads all web and app development projects at AVBT Technologies, ensuring every digital product is fast, scalable, and built to last.",
-    initials: "RV",
-    color: "from-violet-500 to-purple-500",
+    name: "Tanuj Prakash",
+    role: "Creative Head",
+    bio: "Creative visionary leading visual branding, identity systems, and UI/UX storytelling. Tanuj crafts distinct aesthetic experiences and high-conversion brand assets that elevate AVBT clients in their competitive markets.",
+    image: "/images/team/tanuj-prakash.webp",
+    initials: "TP",
+    color: "from-purple-500 to-pink-500",
   },
   {
-    name: "Priya Singh",
-    role: "Head of Design",
-    bio: "Award-winning visual designer specializing in brand identity systems, UI/UX design, and motion graphics. Priya oversees the design quality across all AVBT client projects and is the creative backbone of the branding team.",
-    initials: "PS",
-    color: "from-pink-500 to-rose-500",
-  },
-  {
-    name: "Karan Thakur",
-    role: "Video Production Lead",
-    bio: "Cinematic storyteller with 5+ years of professional video editing, DaVinci Resolve color grading, and motion design. Karan produces the video content that helps AVBT clients grow their audiences and sell their products.",
-    initials: "KT",
-    color: "from-green-500 to-teal-500",
+    name: "Swayam Khanna",
+    role: "Backend Engineer",
+    bio: "Architecture and backend specialist architecting robust APIs, scalable databases, and high-performance serverless workflows. Swayam ensures rock-solid stability, speed, and security across all digital platforms.",
+    image: "/images/team/swayam-khanna.webp",
+    initials: "SK",
+    color: "from-emerald-500 to-teal-500",
   },
 ];
 
@@ -224,22 +220,42 @@ export default function AboutUs() {
         >
           <p className="text-primary font-semibold tracking-widest text-sm uppercase mb-4">THE TEAM</p>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-12 text-white">Meet the AVBT Technologies Team — Designers, Developers & Strategists</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {team.map((member, i) => (
               <motion.div
                 key={member.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }}
-                className="glass-card rounded-2xl p-6 text-center flex flex-col justify-between"
+                className="glass-card rounded-3xl p-6 sm:p-7 text-center flex flex-col justify-between group hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300"
               >
                 <div>
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${member.color} flex items-center justify-center mx-auto mb-4 shadow-md`}>
-                    <span className="text-white font-display font-bold text-xl">{member.initials}</span>
+                  <div className="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-5 rounded-2xl overflow-hidden p-1 bg-gradient-to-br from-white/10 to-white/5 border border-white/10 group-hover:border-primary/50 transition-all duration-300 shadow-xl">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      width="128"
+                      height="128"
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top rounded-xl transform transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        // Fallback to initials avatar if image fails to load
+                        (e.target as HTMLElement).style.display = "none";
+                      }}
+                    />
+                    <div className={`w-full h-full rounded-xl bg-gradient-to-br ${member.color} hidden items-center justify-center`}>
+                      <span className="text-white font-display font-bold text-2xl">{member.initials}</span>
+                    </div>
                   </div>
-                  <h3 className="font-display font-bold text-white mb-1">{member.name}</h3>
-                  <p className="text-primary text-xs font-semibold mb-3">{member.role}</p>
-                  <p className="text-foreground-muted text-sm leading-relaxed">{member.bio}</p>
+                  <h3 className="font-display font-bold text-white text-lg sm:text-xl mb-1 group-hover:text-primary transition-colors">
+                    {member.name}
+                  </h3>
+                  <p className="text-primary text-xs sm:text-sm font-semibold tracking-wide mb-4">
+                    {member.role}
+                  </p>
+                  <p className="text-foreground-muted text-xs sm:text-sm leading-relaxed">
+                    {member.bio}
+                  </p>
                 </div>
               </motion.div>
             ))}
