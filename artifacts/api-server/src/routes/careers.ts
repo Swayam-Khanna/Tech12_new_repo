@@ -22,7 +22,7 @@ router.post("/careers/apply", (req, res, next) => {
     const emailPass = process.env.EMAIL_PASS;
     const emailHost = process.env.EMAIL_HOST || "smtp.zoho.in";
     const emailPort = Number(process.env.EMAIL_PORT) || 465;
-    const receiver = "techavbt@gmail.com";
+    const receiver = process.env.CAREERS_RECEIVER || process.env.CONTACT_RECEIVER || "contact@avbt.in";
 
     if (!emailUser || !emailPass) {
       req.log.error("Email credentials are not configured");
@@ -110,7 +110,7 @@ router.post("/careers/apply", (req, res, next) => {
             </tr>
           </table>
           <hr style="border-color: rgba(255,255,255,0.1); margin: 24px 0 16px;" />
-          <p style="color: #64748B; font-size: 12px; margin: 0;">Sent automatically from AVBT Technologies Careers Portal to techavbt@gmail.com</p>
+          <p style="color: #64748B; font-size: 12px; margin: 0;">Sent automatically from AVBT Technologies Careers Portal to ${receiver}</p>
         </div>
       `,
       attachments,
@@ -118,7 +118,7 @@ router.post("/careers/apply", (req, res, next) => {
 
     try {
       await transporter.sendMail(mailOptions);
-      req.log.info({ name, email, role }, "Career application email sent to techavbt@gmail.com");
+      req.log.info({ name, email, role, receiver }, "Career application email sent successfully");
       res.json({ success: true, message: "Application submitted successfully." });
     } catch (sendErr) {
       req.log.error({ sendErr }, "Failed to send career application email");
