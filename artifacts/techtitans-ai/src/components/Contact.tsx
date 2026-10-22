@@ -11,7 +11,7 @@ export function Contact() {
 
   const [form, setForm] = useState({
     name: "",
-    email: "",
+    phone: "",
     service: "",
     subService: "",
     message: "",
@@ -52,6 +52,13 @@ export function Contact() {
     (s) => s.shortTitle === form.service || s.title === form.service || s.id === form.service
   );
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Strictly allow only digits and maximum 10 digits
+    const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 10);
+    setForm((prev) => ({ ...prev, phone: digitsOnly }));
+    if (error) setError(null);
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
@@ -60,6 +67,13 @@ export function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const cleanPhone = form.phone.replace(/\D/g, '');
+    if (!cleanPhone || cleanPhone.length !== 10) {
+      setError("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
 
@@ -77,7 +91,7 @@ export function Contact() {
       }
 
       setIsSuccess(true);
-      setForm({ name: "", email: "", service: "", subService: "", message: "" });
+      setForm({ name: "", phone: "", service: "", subService: "", message: "" });
       setTimeout(() => setIsSuccess(false), 6000);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Failed to send. Please try again.");
@@ -138,16 +152,35 @@ export function Contact() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-white/80 ml-1">Email</label>
-                    <input
-                      required
-                      type="email"
-                      name="email"
-                      value={form.email}
-                      onChange={handleChange}
-                      placeholder="john@example.com"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-                    />
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm font-medium text-white/80 ml-1">Mobile Number</label>
+                      <span className="text-[11px] text-foreground-muted font-mono">{form.phone.length}/10 digits</span>
+                    </div>
+                    <div className="relative flex items-center">
+                      <span className="absolute left-4 text-xs font-semibold text-primary select-none">+91</span>
+                      <input
+                        required
+                        type="tel"
+                        inputMode="numeric"
+                        pattern="[0-9]{10}"
+                        maxLength={10}
+                        name="phone"
+                        value={form.phone}
+                        onChange={handlePhoneChange}
+                        onKeyDown={(e) => {
+                          if (
+                            !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key) &&
+                            !/^[0-9]$/.test(e.key) &&
+                            !e.ctrlKey &&
+                            !e.metaKey
+                          ) {
+                            e.preventDefault();
+                          }
+                        }}
+                        placeholder="9876543210"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-mono tracking-wider"
+                      />
+                    </div>
                   </div>
                 </div>
 

@@ -70,8 +70,8 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-3 text-sm">
                 <Mail className="w-4 h-4 text-neutral-400 flex-shrink-0" />
-                <a href="mailto:contact@avbt.in" className="hover:text-white transition-colors break-all">
-                  contact@avbt.in
+                <a href="mailto:info@avbt.in" className="hover:text-white transition-colors break-all">
+                  info@avbt.in
                 </a>
               </li>
               <li className="flex items-center gap-3 text-sm">

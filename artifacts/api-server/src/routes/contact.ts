@@ -4,10 +4,16 @@ import nodemailer from "nodemailer";
 const router: IRouter = Router();
 
 router.post("/contact", async (req, res) => {
-  const { name, email, service, subService, message } = req.body;
+  const { name, phone, email, service, subService, message } = req.body;
 
-  if (!name || !email || !service || !message) {
-    res.status(400).json({ success: false, error: "All fields are required." });
+  if (!name || (!phone && !email) || !service || !message) {
+    res.status(400).json({ success: false, error: "Name, phone, service and message are required." });
+    return;
+  }
+
+  const phoneClean = (phone || "").replace(/\D/g, "");
+  if (phone && (phoneClean.length !== 10 || !/^\d{10}$/.test(phoneClean))) {
+    res.status(400).json({ success: false, error: "Phone number must be exactly 10 digits." });
     return;
   }
 
@@ -49,7 +55,7 @@ router.post("/contact", async (req, res) => {
   const mailOptions = {
     from: `"AVBT Technologies Contact" <${emailUser}>`,
     to: contactReceiver,
-    replyTo: email,
+    ...(email ? { replyTo: email } : {}),
     subject: `New Inquiry: ${subjectService} — from ${name}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0B0F19; color: #ffffff; padding: 32px; border-radius: 12px;">
@@ -61,9 +67,14 @@ router.post("/contact", async (req, res) => {
             <td style="padding: 10px 0; color: #ffffff; font-weight: bold;">${name}</td>
           </tr>
           <tr>
+            <td style="padding: 10px 0; color: #9CA3AF; vertical-align: top;">Mobile Number</td>
+            <td style="padding: 10px 0; color: #22C55E; font-weight: bold;"><a href="tel:${phoneClean || phone}" style="color: #22C55E; text-decoration: none;">+91 ${phoneClean || phone}</a></td>
+          </tr>
+          ${email ? `
+          <tr>
             <td style="padding: 10px 0; color: #9CA3AF; vertical-align: top;">Email</td>
             <td style="padding: 10px 0; color: #3B82F6;"><a href="mailto:${email}" style="color: #3B82F6;">${email}</a></td>
-          </tr>
+          </tr>` : ""}
           <tr>
             <td style="padding: 10px 0; color: #9CA3AF; vertical-align: top;">Service</td>
             <td style="padding: 10px 0; color: #22C55E; font-weight: bold;">${service}</td>
@@ -86,7 +97,7 @@ router.post("/contact", async (req, res) => {
 
   try {
     await transporter.sendMail(mailOptions);
-    req.log.info({ name, email, service }, "Contact form email sent");
+    req.log.info({ name, phone: phoneClean || phone, service }, "Contact form email sent");
     res.json({ success: true, message: "Email sent successfully." });
   } catch (err) {
     req.log.error({ err }, "Failed to send contact form email");
